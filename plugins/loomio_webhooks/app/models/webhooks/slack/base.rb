@@ -1,4 +1,8 @@
-Webhooks::Slack::Base = Struct.new(:event) do
+module Loomio::Plugins::LoomioWebhooks
+  module Plugins
+    module LoomioWebhooks
+      module Slack
+        Base = Struct.new(:event) do
   include Routing
 
   def username
