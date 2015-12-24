@@ -1,6 +1,7 @@
 require 'rails_helper'
 
-describe WebhookService do
+describe Plugins::LoomioWebhooks::WebhookService do
+  let(:subject) { Plugins::LoomioWebhooks::WebhookService }
   let(:user) { create(:user) }
   let(:discussion) { create :discussion }
   let(:comment) { build(:comment, discussion: discussion, author: user) }
@@ -38,7 +39,7 @@ describe WebhookService do
 
     it 'serializes a new motion' do
       event = MotionService.create actor: user, motion: motion
-      payload = JSON.parse WebhookService.send(:payload_for, webhook, event)
+      payload = JSON.parse subject.send(:payload_for, webhook, event)
       expect(payload['username']).to eq 'Loomio Bot'
       expect(payload['text']).to match /#{user.name}.* started a new proposal in .*#{discussion.title}/
     end
@@ -46,7 +47,7 @@ describe WebhookService do
     it 'serializes a motion outcome created' do
       motion.save
       event = MotionService.create_outcome actor: user, motion: motion, params: { outcome: 'new outcome' }
-      payload = JSON.parse WebhookService.send(:payload_for, webhook, event)
+      payload = JSON.parse subject.send(:payload_for, webhook, event)
       expect(payload['username']).to eq 'Loomio Bot'
       expect(payload['text']).to match /#{user.name}.*published an outcome in.*#{motion.name}/
     end
@@ -54,22 +55,22 @@ describe WebhookService do
     it 'serializes a motion outcome updated' do
       motion.save
       event = MotionService.update_outcome actor: user, motion: motion, params: { outcome: 'updated outcome' }
-      payload = JSON.parse WebhookService.send(:payload_for, webhook, event)
+      payload = JSON.parse subject.send(:payload_for, webhook, event)
       expect(payload['username']).to eq 'Loomio Bot'
       expect(payload['text']).to match /#{user.name}.*updated the outcome for.*#{motion.name}/
     end
 
-    it 'serializes a new vote' do 
+    it 'serializes a new vote' do
       event = VoteService.create actor: user, vote: vote
-      payload = JSON.parse WebhookService.send(:payload_for, webhook, event)
+      payload = JSON.parse subject.send(:payload_for, webhook, event)
       expect(payload['username']).to eq 'Loomio Bot'
       vote_position = I18n.t :"webhooks.slack.position_verbs.#{vote.position}"
       expect(payload['text']).to match /#{user.name}.* .*#{vote_position}.* .*#{vote.proposal.name}.* in .*#{discussion.title}/
     end
 
-    it 'serializes a new discussion' do 
+    it 'serializes a new discussion' do
       event = DiscussionService.create actor: user, discussion: discussion
-      payload = JSON.parse WebhookService.send(:payload_for, webhook, event)
+      payload = JSON.parse subject.send(:payload_for, webhook, event)
       expect(payload['username']).to eq 'Loomio Bot'
       expect(payload['text']).to match /#{user.name}.* started a new discussion in .*#{discussion.group.name}.*/
     end
@@ -78,8 +79,8 @@ describe WebhookService do
   describe '#webhook_object_for' do
     it 'should create a struct based on the event\'s kind' do
       event = MotionService.create_outcome actor: user, motion: motion, params: { outcome: 'new outcome' }
-      webhook_event = WebhookService.send(:webhook_object_for, webhook, event)
-      expect(webhook_event).to be_a Webhooks::Slack::MotionOutcomeCreated
+      webhook_event = subject.send(:webhook_object_for, webhook, event)
+      expect(webhook_event).to be_a Plugins::LoomioWebhooks::Slack::MotionOutcomeCreated
     end
   end
 
