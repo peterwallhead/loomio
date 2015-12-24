@@ -3,6 +3,7 @@ module Plugins
     class PluginNotFoundError < Exception; end
 
     def self.install_plugins!
+      Dir.glob('plugins/*/plugin.rb').each { |plugin_file| require [Rails.root, plugin_file].join('/') }
       repository.keys.each { |name| install! name }
     end
 

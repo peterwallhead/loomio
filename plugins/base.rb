@@ -30,6 +30,12 @@ module Plugins
       @actions.add proc
     end
 
+    def extend_class(klass, &block)
+      raise NoCodeSpecifiedError.new unless block_given? || path
+      raise NoClassSpecifiedError.new unless klass.present?
+      klass.class_eval &block
+    end
+
     def use_asset_directory(glob)
       use_directory(glob) { |path| use_asset(path) }
     end
@@ -38,7 +44,7 @@ module Plugins
       raise NoCodeSpecifiedError.new unless block_given? || path
       # ???
     end
-    
+
     def use_translations(path = nil, &block)
       raise NoCodeSpecifiedError.new unless block_given? || path
       # ???
