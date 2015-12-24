@@ -1,4 +1,4 @@
-class Webhooks::Slack::MotionClosingSoon < Webhooks::Slack::Base
+class Plugins::LoomioWebhooks::Slack::MotionClosingSoon < Plugins::LoomioWebhooks::Slack::Base
 
   def attachment_fallback
     "*#{eventable.name}*\n#{eventable.description}\n"

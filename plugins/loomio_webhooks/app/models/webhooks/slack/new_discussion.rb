@@ -1,4 +1,4 @@
-class Webhooks::Slack::NewDiscussion < Webhooks::Slack::Base
+class Plugins::LoomioWebhooks::Slack::NewDiscussion < Plugins::LoomioWebhooks::Slack::Base
 
   def text
     I18n.t :"webhooks.slack.new_discussion", author: author.name, name: eventable.title, group: eventable.group.name

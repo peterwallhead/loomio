@@ -24,7 +24,6 @@ describe MotionService do
 
   it 'does not call the webhook for the motions parent group' do
     create :webhook, hookable: parent
-    expect(webhook_service).to receive(:publish!)
     expect(webhook_service).to_not receive(:send_payload!)
     MotionService.create(motion: motion, actor: user)
   end

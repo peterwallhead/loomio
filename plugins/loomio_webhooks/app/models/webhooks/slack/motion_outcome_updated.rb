@@ -1,4 +1,4 @@
-class Webhooks::Slack::MotionOutcomeUpdated < Webhooks::Slack::Base
+class Plugins::LoomioWebhooks::Slack::MotionOutcomeUpdated < Plugins::LoomioWebhooks::Slack::Base
 
   def attachment_fallback
     "*#{eventable.name}*\n#{eventable.outcome}\n"

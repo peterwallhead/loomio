@@ -8,7 +8,7 @@ module Plugins
     attr_reader :actions, :events, :enabled
 
     def self.setup!(name)
-      Loomio::Plugins::Repository.store new(name).tap { |plugin| yield plugin }
+      Repository.store new(name).tap { |plugin| yield plugin }
     end
 
     def initialize(name)
@@ -21,20 +21,25 @@ module Plugins
     end
 
     def use_class_directory(glob)
-      Dir.glob([:plugins, @name, glob, '*'].join('/')).each { |path| use_class(path) }
+      use_directory(glob) { |path| use_class(path) }
     end
 
     def use_class(path = nil, &block)
       raise NoCodeSpecifiedError.new unless block_given? || path
-      proc = block_given? ? block.to_proc : Proc.new { byebug; require [Rails.root, path].join('/') }
+      proc = block_given? ? block.to_proc : Proc.new { require [Rails.root, :plugins, @name, path].join('/') }
       @actions.add proc
     end
 
     def use_asset_directory(glob)
-
+      use_directory(glob) { |path| use_asset(path) }
     end
 
     def use_asset(path = nil, &block)
+      raise NoCodeSpecifiedError.new unless block_given? || path
+      # ???
+    end
+    
+    def use_translations(path = nil, &block)
       raise NoCodeSpecifiedError.new unless block_given? || path
       # ???
     end
@@ -47,6 +52,12 @@ module Plugins
     def use_events(&block)
       raise NoCodeSpecifiedError.new unless block_given?
       @events.add block.to_proc
+    end
+
+    private
+
+    def use_directory(glob)
+      Dir.chdir("plugins/#{@name}") { Dir.glob("#{glob}/*").each { |path| yield path } }
     end
 
   end

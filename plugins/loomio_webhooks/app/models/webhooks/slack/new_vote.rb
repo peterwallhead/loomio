@@ -1,4 +1,4 @@
-class Webhooks::Slack::NewVote < Webhooks::Slack::Base
+class Plugins::LoomioWebhooks::Slack::NewVote < Plugins::LoomioWebhooks::Slack::Base
 
   def text
     I18n.t :"webhooks.slack.new_vote", author: author.name, position: vote_position, proposal: proposal_link(eventable), name: discussion_link

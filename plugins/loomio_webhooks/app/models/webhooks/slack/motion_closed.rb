@@ -1,4 +1,4 @@
-class Webhooks::Slack::MotionClosed < Webhooks::Slack::Base
+class Plugins::LoomioWebhooks::Slack::MotionClosed < Plugins::LoomioWebhooks::Slack::Base
 
   def attachment_fallback
     "*#{eventable.name}*\n#{eventable.description}\n"
@@ -15,5 +15,5 @@ class Webhooks::Slack::MotionClosed < Webhooks::Slack::Base
   def attachment_fields
     [view_motion_on_loomio]
   end
-  
+
 end

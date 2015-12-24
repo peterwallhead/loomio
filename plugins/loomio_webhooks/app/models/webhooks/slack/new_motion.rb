@@ -1,4 +1,4 @@
-class Webhooks::Slack::NewMotion < Webhooks::Slack::Base
+class Plugins::LoomioWebhooks::Slack::NewMotion < Plugins::LoomioWebhooks::Slack::Base
 
   def text
     I18n.t :"webhooks.slack.new_motion", author: author.name, name: discussion_link
