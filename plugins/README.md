@@ -117,11 +117,19 @@ Parameters passed through these events vary a little based on the event, but the
 ```
 Here we listen for whenever a new motion is created, build a new Kickflip with it, and call perform on it.
 
-### Add custom stylesheets
-(not working yet)
-
 ### Add angular components
-(not working yet)
+Much of the javascript app is written using Angular components, which are reusable directives accompanied by a template and stylesheet. You can check them out in `lineman/app/components`. A kickflip component might look like this:
+
+```
+/plugins
+  /components
+    /kickflip
+      kickflip.coffee
+      kickflip.haml
+      kickflip.scss  
+```
+
+We highly recommend sticking to this structure for plugins as well.
 
 ### Attach code to outlets in the Angular interface
 (not working yet)
