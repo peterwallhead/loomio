@@ -44,14 +44,6 @@ module Plugins
       use_asset [path, :haml].join('.')
     end
 
-    def use_script(path)
-      use_asset [path, :coffee].join('.')
-    end
-
-    def use_stylesheet(path)
-      use_asset [path, :scss].join('.')
-    end
-
     def use_translations(path = nil, &block)
       raise NoCodeSpecifiedError.new unless block_given? || path
       # ???
@@ -67,6 +59,10 @@ module Plugins
       @events.add block.to_proc
     end
 
+    def use_component(path, name)
+      [:coffee, :scss, :haml].each { |ext| use_asset("#{path}/#{name}.#{ext}") }
+    end
+
     private
 
     def use_asset(path)
@@ -74,6 +70,14 @@ module Plugins
       dest_path = [Rails.root, :lineman, :app, :plugins, @name, path].join('/')
       dest_folder = dest_path.split('/')[0...-1].join('/') # drop filename so we can create the directory beforehand
       @actions.add Proc.new { FileUtils.mkdir_p(dest_folder) && FileUtils.cp(file_path, dest_path) }
+    end
+
+    def use_script(path)
+      use_asset [path, :coffee].join('.')
+    end
+
+    def use_stylesheet(path)
+      use_asset [path, :scss].join('.')
     end
 
     def use_directory(glob)

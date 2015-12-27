@@ -11,8 +11,7 @@ module Plugins
 
         plugin.use_migration "db/migrate/create_webhooks"
 
-        plugin.use_script "javascripts/hello"
-        plugin.use_stylesheet "stylesheets/hello"
+        plugin.use_component "components/after_sign_in", :after_sign_in
 
         plugin.use_events do |event_bus|
           event_bus.listen('motion_outcome_created_event',
