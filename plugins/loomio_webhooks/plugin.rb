@@ -11,6 +11,9 @@ module Plugins
 
         plugin.use_migration "db/migrate/create_webhooks"
 
+        plugin.use_script "javascripts/hello"
+        plugin.use_stylesheet "stylesheets/hello"
+
         plugin.use_events do |event_bus|
           event_bus.listen('motion_outcome_created_event',
                            'motion_outcome_updated_event',
