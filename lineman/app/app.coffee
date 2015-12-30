@@ -13,11 +13,15 @@ angular.module('loomioApp', ['ngNewRouter',
                              'angular-clipboard',
                              'checklist-model',
                              'monospaced.elastic',
-                             'angularMoment']).config ($httpProvider, $locationProvider, $translateProvider, markedProvider, $compileProvider, $animateProvider) ->
+                             'angularMoment']).config ($httpProvider, $locationProvider, $translateProvider, markedProvider, $compileProvider, $animateProvider, $controllerProvider) ->
 
   # this should make stuff faster but you need to add "animated" class to animated things.
   # http://www.bennadel.com/blog/2935-enable-animations-explicitly-for-a-performance-boost-in-angularjs.htm
   $animateProvider.classNameFilter( /\banimated\b/ );
+
+  # register plugin outlets with blank controllers by default
+  _.each ['AfterSignIn'], (outlet) ->
+    $controllerProvider.register "#{outlet}Outlet", ->
 
   #configure markdown
   applyMentionsFor = (tag, text)->
