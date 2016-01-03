@@ -5,7 +5,7 @@ module Plugins
 
   class Base
     attr_accessor :name, :installed
-    attr_reader :actions, :events, :enabled
+    attr_reader :actions, :events, :outlets, :enabled
 
     def self.setup!(name)
       Repository.store new(name).tap { |plugin| yield plugin }
@@ -13,7 +13,7 @@ module Plugins
 
     def initialize(name)
       @name = name
-      @actions, @events = Set.new, Set.new
+      @actions, @events, @outlets = Set.new, Set.new, Set.new
     end
 
     def enabled=(value)
@@ -31,7 +31,7 @@ module Plugins
     end
 
     def extend_class(klass, &block)
-      raise NoCodeSpecifiedError.new unless block_given? || path
+      raise NoCodeSpecifiedError.new unless block_given?
       raise NoClassSpecifiedError.new unless klass.present?
       klass.class_eval &block
     end
@@ -61,6 +61,7 @@ module Plugins
 
     def use_component(path, name)
       [:coffee, :scss, :haml].each { |ext| use_asset("#{path}/#{name}.#{ext}") }
+      @outlets.add name
     end
 
     private

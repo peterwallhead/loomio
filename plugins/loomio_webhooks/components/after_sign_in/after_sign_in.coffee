@@ -1,2 +1,2 @@
-angular.module('loomioApp').controller 'AfterSignInOutlet', ($scope) ->
+angular.module('loomioApp').controller 'AfterSignIn', ($scope) ->
   console.log('hello, mom!')

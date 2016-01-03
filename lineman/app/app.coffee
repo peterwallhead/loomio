@@ -19,9 +19,9 @@ angular.module('loomioApp', ['ngNewRouter',
   # http://www.bennadel.com/blog/2935-enable-animations-explicitly-for-a-performance-boost-in-angularjs.htm
   $animateProvider.classNameFilter( /\banimated\b/ );
 
-  # register plugin outlets with blank controllers by default
-  _.each ['AfterSignIn'], (outlet) ->
-    $controllerProvider.register "#{outlet}Outlet", ->
+  controllerExists = (name) ->
+    _.any angular.module('loomioApp')._invokeQueue, (dependency) ->
+      name == dependency[2][0]
 
   #configure markdown
   applyMentionsFor = (tag, text)->
@@ -50,6 +50,11 @@ angular.module('loomioApp', ['ngNewRouter',
                        preferredLanguage(locale)
 
     $translateProvider.useSanitizeValueStrategy('escapeParameters');
+
+    PLUGIN_OUTLETS = ['AfterSignIn']
+    # register plugin outlets with blank controllers by default
+    _.each _.difference(PLUGIN_OUTLETS, window.Loomio.plugins.active_outlets), (outlet) ->
+      $controllerProvider.register outlet, ->
 
   # disable angular debug stuff in production
   if window.Loomio? and window.Loomio.environment == 'production'

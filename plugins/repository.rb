@@ -17,8 +17,21 @@ module Plugins
 
       plugin.actions.map(&:call)
       plugin.events.map { |events| events.call(EventBus) }
+      plugin.outlets.map { |outlet| active_outlets.add(outlet) }
       plugin.installed = true
     end
+
+    def self.to_config
+      {
+        installed:      repository.values.select(&:installed),
+        active_outlets: active_outlets.map(&:to_s).map(&:camelcase)
+      }
+    end
+
+    def self.active_outlets
+      @@active_outlets ||= Set.new
+    end
+    private_class_method :active_outlets
 
     def self.repository
       @@repository ||= Hash.new
