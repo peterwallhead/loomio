@@ -131,10 +131,15 @@ Much of the javascript app is written using Angular components, which are reusab
 
 We highly recommend sticking to this structure for plugins as well.
 
+(TBC...)
+
 ### Attach code to outlets in the Angular interface
 (not working yet)
 
 ### Add database migrations
+(not working yet)
+
+### Adding translations to your plugin
 (not working yet)
 
 ### Add tests

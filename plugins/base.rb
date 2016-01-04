@@ -5,7 +5,7 @@ module Plugins
 
   class Base
     attr_accessor :name, :installed
-    attr_reader :actions, :events, :outlets, :enabled
+    attr_reader :actions, :events, :outlets, :translations, :enabled
 
     def self.setup!(name)
       Repository.store new(name).tap { |plugin| yield plugin }
@@ -13,6 +13,7 @@ module Plugins
 
     def initialize(name)
       @name = name
+      @translations = {}
       @actions, @events, @outlets = Set.new, Set.new, Set.new
     end
 
@@ -44,9 +45,9 @@ module Plugins
       use_asset [path, :haml].join('.')
     end
 
-    def use_translations(path = nil, &block)
-      raise NoCodeSpecifiedError.new unless block_given? || path
-      # ???
+    def use_translations(path, filename = :client)
+      raise NoCodeSpecifiedError.new unless path
+      Dir.chdir("plugins/#{@name}") { Dir.glob("#{path}/#{filename}.*.yml").each { |path| use_translation(path) } }
     end
 
     def use_migration(path = nil, &block)
@@ -71,6 +72,10 @@ module Plugins
       dest_path = [Rails.root, :lineman, :app, :plugins, @name, path].join('/')
       dest_folder = dest_path.split('/')[0...-1].join('/') # drop filename so we can create the directory beforehand
       @actions.add Proc.new { FileUtils.mkdir_p(dest_folder) && FileUtils.cp(file_path, dest_path) }
+    end
+
+    def use_translation(path)
+      @translations.deep_merge! YAML.load_file(path)
     end
 
     def use_script(path)

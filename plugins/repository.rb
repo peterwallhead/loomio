@@ -21,9 +21,13 @@ module Plugins
       plugin.installed = true
     end
 
+    def self.translations_for(locale = I18n.locale)
+      active_plugins.map(&:translations).reduce({}, :merge).slice(locale.to_s)
+    end
+
     def self.to_config
       {
-        installed: repository.values.select(&:installed),
+        installed: active_plugins,
         activeOutlets: active_outlets
       }
     end
@@ -31,6 +35,10 @@ module Plugins
     def self.apply_outlet(outlet, name)
       raise "Error installing #{name}: Outlet #{outlet} is already being used by #{active_outlets[outlet]}" if active_outlets[outlet]
       active_outlets[outlet] = name
+    end
+
+    def self.active_plugins
+      repository.values.select(&:installed)
     end
 
     def self.active_outlets

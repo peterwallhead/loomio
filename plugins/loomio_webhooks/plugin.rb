@@ -13,6 +13,8 @@ module Plugins
 
         plugin.use_component "components/after_sign_in", :after_sign_in
 
+        plugin.use_translations "config/locales", :client
+
         plugin.use_events do |event_bus|
           event_bus.listen('motion_outcome_created_event',
                            'motion_outcome_updated_event',
