@@ -140,6 +140,43 @@ We highly recommend sticking to this structure for plugins as well.
 (not working yet)
 
 ### Adding translations to your plugin
-(not working yet)
+If you're writing templates, it may be that you wish to include translatable strings in them. We support a super easy way of
+including yml translations with your plugin.
+
+Given a template like this:
+```
+  .kickflip
+    100 points!
+```
+
+we can change our "100 points" into a translatable string like so:
+```
+  .kickflip{translate: 'kickflip.one_hundred_points'}
+```
+(NB: it's a good idea to namespace your translations with your plugin name, to avoid conflicts)
+
+Then, we can create a yml file in our plugin
+
+```yml
+  # plugins/kickflip/config/locales/kickflip.en.yml
+  en:
+    kickflip:
+      one_hundred_points: "100 points!"
+```
+
+and translate it in another file:
+```yml
+  # plugins/kickflip/config/locales/kickflip.de.yml
+  de:
+    kickflip:
+      one_hundred_points: "100 Punkte!"
+```
+
+Now, we can tell our plugin to load those translations with the `use_translations` method in our config:
+
+```ruby
+  plugin.use_translations("config/locales", :kickflip)
+```
+where 'config/locales' is the folder relative to the plugin root, and 'kickflip' is the name of our locale files.
 
 ### Add tests
