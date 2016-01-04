@@ -16,20 +16,25 @@ module Plugins
       return unless plugin.enabled || plugin.installed
 
       plugin.actions.map(&:call)
-      plugin.events.map { |events| events.call(EventBus) }
-      plugin.outlets.map { |outlet| active_outlets.add(outlet) }
+      plugin.outlets.map { |outlet| apply_outlet(outlet, plugin.name) }
+      plugin.events.map  { |events| events.call(EventBus) }
       plugin.installed = true
     end
 
     def self.to_config
       {
-        installed:      repository.values.select(&:installed),
-        active_outlets: active_outlets.map(&:to_s).map(&:camelcase)
+        installed: repository.values.select(&:installed),
+        activeOutlets: active_outlets
       }
     end
 
+    def self.apply_outlet(outlet, name)
+      raise "Error installing #{name}: Outlet #{outlet} is already being used by #{active_outlets[outlet]}" if active_outlets[outlet]
+      active_outlets[outlet] = name
+    end
+
     def self.active_outlets
-      @@active_outlets ||= Set.new
+      @@active_outlets ||= Hash.new
     end
     private_class_method :active_outlets
 

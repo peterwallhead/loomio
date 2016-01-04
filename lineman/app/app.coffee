@@ -51,10 +51,9 @@ angular.module('loomioApp', ['ngNewRouter',
 
     $translateProvider.useSanitizeValueStrategy('escapeParameters');
 
-    PLUGIN_OUTLETS = ['AfterSignIn']
-    # register plugin outlets with blank controllers by default
-    _.each _.difference(PLUGIN_OUTLETS, window.Loomio.plugins.active_outlets), (outlet) ->
-      $controllerProvider.register outlet, ->
+    # allow stubbing of unused plugin outlets
+    window.Loomio.plugins.stubOutlet = (outlet) ->
+      $controllerProvider.register _.capitalize(_.camelCase(outlet)), ->
 
   # disable angular debug stuff in production
   if window.Loomio? and window.Loomio.environment == 'production'
