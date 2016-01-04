@@ -41,10 +41,6 @@ module Plugins
       use_directory(glob) { |path| use_asset(path) }
     end
 
-    def use_template(path)
-      use_asset [path, :haml].join('.')
-    end
-
     def use_translations(path, filename = :client)
       raise NoCodeSpecifiedError.new unless path
       Dir.chdir("plugins/#{@name}") { Dir.glob("#{path}/#{filename}.*.yml").each { |path| use_translation(path) } }

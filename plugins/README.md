@@ -131,17 +131,16 @@ Much of the javascript app is written using Angular components, which are reusab
 
 We highly recommend sticking to this structure for plugins as well.
 
-(TBC...)
+TODO
 
 ### Attach code to outlets in the Angular interface
-(not working yet)
+TODO
 
 ### Add database migrations
 (not working yet)
 
 ### Adding translations to your plugin
-If you're writing templates, it may be that you wish to include translatable strings in them. We support a super easy way of
-including yml translations with your plugin.
+If you're writing templates, it may be that you wish to include translatable strings in them. We support a super easy way of including yml translations with your plugin.
 
 Given a template like this:
 ```
@@ -180,3 +179,4 @@ Now, we can tell our plugin to load those translations with the `use_translation
 where 'config/locales' is the folder relative to the plugin root, and 'kickflip' is the name of our locale files.
 
 ### Add tests
+TODO

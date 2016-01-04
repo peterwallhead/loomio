@@ -19,10 +19,6 @@ angular.module('loomioApp', ['ngNewRouter',
   # http://www.bennadel.com/blog/2935-enable-animations-explicitly-for-a-performance-boost-in-angularjs.htm
   $animateProvider.classNameFilter( /\banimated\b/ );
 
-  controllerExists = (name) ->
-    _.any angular.module('loomioApp')._invokeQueue, (dependency) ->
-      name == dependency[2][0]
-
   #configure markdown
   applyMentionsFor = (tag, text)->
     text = text.replace(/\[\[@([a-zA-Z0-9]+)\]\]/g, "<a class='lmo-user-mention' href='/u/$1'>@$1</a>")
