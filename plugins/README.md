@@ -100,8 +100,7 @@ If you want to extend an existing class, you can do so easily! Here we use the `
 ```
 
 ### Listen for Loomio events
-Loomio emits all kinds of events as things happen within the app. Most service methods (the files living in `app/services`) will emit events, as well as when new Event instances are created (`app/models/events`). In order to listen to these events, you can use the `use_events` method, which will supply you an instance of our EventBus to
-apply listeners to.
+Loomio emits all kinds of events as things happen within the app. Most service methods (the files living in `app/services`) will emit events, as well as when new Event instances are created (`app/models/events`). In order to listen to these events, you can use the `use_events` method, which will supply you an instance of our EventBus to apply listeners to.
 
 Parameters passed through these events vary a little based on the event, but the following rules of thumb apply:
 
@@ -131,10 +130,64 @@ Much of the javascript app is written using Angular components, which are reusab
 
 We highly recommend sticking to this structure for plugins as well.
 
-TODO
+To tell the plugin to use your component, put a line in our `plugin.rb` like this:
 
-### Attach code to outlets in the Angular interface
-TODO
+```
+  use_component "components/kickflip", :kickflip
+```
+(where `components/kickflip` is the folder the component is stored in, and `:kickflip` is the name of the files, sans file extensions)
+
+### Attach components to outlets in the Angular interface
+There are several outlets in the loomio angular interface which you can attach components to. They look like this:
+
+```haml
+  %outlet{controller-name: "before-motion-description"}
+```
+
+They're really harmless to add too, so if you find a place where you'd like to have an outlet but there's not one, send us a PR!
+
+In order to attach a plugin to an outlet, we'll create a component in our plugin which matches the name of the outlet, like so:
+
+```
+/plugin
+  /components
+    /before_motion_description
+      before_motion_description.coffee
+      before_motion_description.haml
+      before_motion_description.scss      
+```
+
+Then, we write a controller into the `.coffee` file which matches the outlet, like so:
+
+```coffee
+angular.module('loomioApp').controller 'BeforeMotionDescription', ($scope) ->
+  $scope.message = "100 points!"
+```
+
+Then, when we write a template file, it will appear in that place in our interface.
+
+```haml
+.kickflip-template
+  {{ message }}
+```
+
+And then we just style it up with the latest and greatest in css amazingness.
+
+```css
+.kickflip-template {
+  color: $awesome;
+}
+```
+(note that these styles are applied site-wide, so it's important to namespace your css correctly!)
+
+Finally, we tell our plugin to use the component:
+
+```coffee
+  plugin.use_component "components/before_motion_description", :before_motion_description
+```
+And voila! Custom code almost anywhere you'd like in the angular interface.
+
+(NB: We don't currently support attaching multiple components to the same outlet, so if you're running across a conflict, let us know and we're happy to work through it with you.)
 
 ### Add database migrations
 (not working yet)
@@ -144,7 +197,7 @@ If you're writing templates, it may be that you wish to include translatable str
 
 Given a template like this:
 ```
-  .kickflip
+  .kickflip-template
     100 points!
 ```
 
