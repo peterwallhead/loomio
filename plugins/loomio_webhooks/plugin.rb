@@ -9,11 +9,7 @@ module Plugins
         plugin.use_class "app/models/webhook"
         plugin.use_class "app/services/webhook_service"
 
-        plugin.use_migration "db/migrate/create_webhooks"
-
-        plugin.use_component "components/after_sign_in", :after_sign_in
-
-        plugin.use_translations "config/locales", :client
+        # plugin.use_migration "db/migrate/create_webhooks"
 
         plugin.use_events do |event_bus|
           event_bus.listen('motion_outcome_created_event',
