@@ -5,6 +5,7 @@ module.exports = require(process.env["LINEMAN_MAIN"]).config.extend "files",
   sass:
     main:  ['app/css/*.scss']
     app:   ['app/components/**/*.scss']
+    plugins: ['app/plugins/**/*.scss']
 
   css:
     app:    ['generated/css/main.css']

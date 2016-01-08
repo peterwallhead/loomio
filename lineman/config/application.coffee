@@ -134,7 +134,7 @@ module.exports = require(process.env["LINEMAN_MAIN"]).config.extend "application
       tasks: ["coffee", "concat_sourcemap:spec"]
 
     sass:
-      files: ["<%= files.sass.vendor %>", "<%= files.sass.app %>", "<%= files.sass.main %>"]
+      files: ["<%= files.sass.vendor %>", "<%= files.sass.app %>", "<%= files.sass.main %>", "<%= files.sass.plugins %>"]
       tasks: ["exec:updateScss", "sass", "concat_sourcemap:css"]
 
     webfonts:
