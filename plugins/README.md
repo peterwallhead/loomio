@@ -79,7 +79,7 @@ You can also include entire directories of classes if you don't want to type out
 ```ruby
   plugin.use_class_directory 'models'
 ```
-(note that this is not recursive)
+(note that this is not recursive, so it'll only include classes within the directory specified, not subdirectories)
 
 ### Extend existing classes
 If you want to extend an existing class, you can do so easily! Here we use the `extend_class` command, and pass it a constant. Then we can write additional functionality onto existing classes within a block
@@ -117,7 +117,12 @@ Parameters passed through these events vary a little based on the event, but the
 Here we listen for whenever a new motion is created, build a new Kickflip with it, and call perform on it.
 
 ### Add angular components
-Much of the javascript app is written using Angular components, which are reusable directives accompanied by a template and stylesheet. You can check them out in `lineman/app/components`. A kickflip component might look like this:
+Much of the javascript app is written using Angular components, which are made up of three parts:
+  - A directive (required)
+  - A template (required for element directives)
+  - A stylesheet (optional)
+
+These allow us to have modular pieces of functionality which can be called upon anywhere in our app. You can check out the existing ones in core in `lineman/app/components`. A kickflip component might look like this:
 
 ```
 /plugins
@@ -127,67 +132,33 @@ Much of the javascript app is written using Angular components, which are reusab
       kickflip.haml
       kickflip.scss  
 ```
-
-We highly recommend sticking to this structure for plugins as well.
+(note that our component folder must be named the same as our .coffee, .haml, and .scss files, and they must be nested in a `components` folder to function properly #opinionated)
 
 To tell the plugin to use your component, put a line in our `plugin.rb` like this:
 
 ```
-  use_component "components/kickflip", :kickflip
+  use_component :kickflip
 ```
-(where `components/kickflip` is the folder the component is stored in, and `:kickflip` is the name of the files, sans file extensions)
+
+This will make you component available within the app.
 
 ### Attach components to outlets in the Angular interface
+Now that the component is loaded into our angular app, how to make it appear on the interface?
+
 There are several outlets in the loomio angular interface which you can attach components to. They look like this:
 
 ```haml
   %outlet{name: "before-motion-description"}
 ```
+(hint: searching the repo for `%outlet` will give you a list of all current outlets. They're really harmless to add too, so if you find a place where you'd like to have an outlet but there's not one, send us a PR!)
 
-They're really harmless to add too, so if you find a place where you'd like to have an outlet but there's not one, send us a PR!
-
-In order to attach a plugin to an outlet, we'll create a component in our plugin which matches the name of the outlet, like so:
+In order to attach a plugin to an outlet, we simply need to specify the name of the outlet in our `use_component` line, like this:
 
 ```
-/plugin
-  /components
-    /before_motion_description
-      before_motion_description.coffee
-      before_motion_description.haml
-      before_motion_description.scss      
+  plugin.use_component :kickflip, outlet: :before_motion_description
 ```
 
-Then, we write a controller into the `.coffee` file which matches the outlet, like so:
-
-```coffee
-angular.module('loomioApp').controller 'BeforeMotionDescription', ($scope) ->
-  $scope.message = "100 points!"
-```
-
-Then, when we write a template file, it will appear in that place in our interface.
-
-```haml
-.kickflip-template
-  {{ message }}
-```
-
-And then we just style it up with the latest and greatest in css amazingness.
-
-```css
-.kickflip-template {
-  color: $awesome;
-}
-```
-(note that these styles are applied site-wide, so it's important to namespace your css correctly!)
-
-Finally, we tell our plugin to use the component:
-
-```coffee
-  plugin.use_component "components/before_motion_description", :before_motion_description
-```
 And voila! Custom code almost anywhere you'd like in the angular interface.
-
-(NB: We don't currently support attaching multiple components to the same outlet, so if you're running across a conflict, let us know and we're happy to work through it with you.)
 
 ### Add database migrations
 (not working yet)
