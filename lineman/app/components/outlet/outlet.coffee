@@ -1,13 +1,6 @@
-angular.module('loomioApp').directive 'outlet', ($controller) ->
-  scope: {outletContent: '@'}
-  controller: '@'
-  name: 'controllerName'
+angular.module('loomioApp').directive 'outlet', ($compile) ->
   restrict: 'E'
-  template: '<div><div ng-include="outletContent"></div></div>'
   replace: true
-  compile: (elem, attrs) ->
-    outletName = _.snakeCase(attrs.controllerName)
-    if pluginName = window.Loomio.plugins.activeOutlets[outletName]
-      attrs.outletContent = "generated/plugins/#{pluginName}/components/#{outletName}/#{outletName}.html"
-    else
-      window.Loomio.plugins.stubOutlet(outletName)
+  link: (scope, elem, attrs) ->
+    if window.Loomio.plugins.activeOutlets[_.snakeCase(attrs.name)]
+      elem.append $compile("<#{_.snakeCase(attrs.name)} />")(scope)

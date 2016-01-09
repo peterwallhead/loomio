@@ -28,4 +28,5 @@ bin/
 /lineman/vendor/bower_components
 .powenv
 /lineman/app/css/modules.scss
+/lineman/app/plugins/
 /lineman/app/components.scss

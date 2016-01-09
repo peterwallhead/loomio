@@ -141,7 +141,7 @@ To tell the plugin to use your component, put a line in our `plugin.rb` like thi
 There are several outlets in the loomio angular interface which you can attach components to. They look like this:
 
 ```haml
-  %outlet{controller-name: "before-motion-description"}
+  %outlet{name: "before-motion-description"}
 ```
 
 They're really harmless to add too, so if you find a place where you'd like to have an outlet but there's not one, send us a PR!

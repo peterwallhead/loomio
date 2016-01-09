@@ -23,6 +23,8 @@
 
       %closing_at_field{proposal: 'proposal'}
 
+      %outlet{name: 'after-proposal-form'}
+
   .modal-footer
     %button.lmo-btn--submit.proposal-form__start-btn{ng-if: 'proposal.isNew()', type: 'submit', translate: 'proposal_form.start_proposal'}
     %button.lmo-btn--submit.proposal-form__save-changes-btn{ng-if: '!proposal.isNew()', type: 'submit', translate: 'common.action.save_changes'}
