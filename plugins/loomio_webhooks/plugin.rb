@@ -9,7 +9,13 @@ module Plugins
         plugin.use_class "app/models/webhook"
         plugin.use_class "app/services/webhook_service"
 
-        # plugin.use_migration "db/migrate/create_webhooks"
+        plugin.use_database_table :webhooks do |table|
+          table.references :hookable, polymorphic: true, index: true
+          table.string :kind, null: false
+          table.string :uri, null: false
+          table.text   :event_types, array: true, default: []
+          table.timestamps
+        end
 
         plugin.use_events do |event_bus|
           event_bus.listen('motion_outcome_created_event',

@@ -2,6 +2,7 @@ require "#{Rails.root}/plugins/repository"
 
 module Plugins
   class NoCodeSpecifiedError < Exception; end
+  class NoClassSpecifiedError < Exception; end
   Outlet = Struct.new(:plugin, :component, :outlet_name)
 
   class Base
@@ -30,6 +31,16 @@ module Plugins
       raise NoCodeSpecifiedError.new unless block_given? || path
       proc = block_given? ? block.to_proc : Proc.new { require [Rails.root, :plugins, @name, path].join('/') }
       @actions.add proc
+    end
+
+    def use_database_table(table_name, &block)
+      return puts "#{table_name} already exists; no migration performed" if ActiveRecord::Base.connection.table_exists?(table_name)
+
+      migration = ActiveRecord::Migration.new
+      def migration.up(table_name, &block)
+        create_table table_name, &block
+      end
+      migration.up(table_name, &block)
     end
 
     def extend_class(klass, &block)

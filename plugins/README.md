@@ -154,14 +154,25 @@ There are several outlets in the loomio angular interface which you can attach c
 
 In order to attach a plugin to an outlet, we simply need to specify the name of the outlet in our `use_component` line, like this:
 
-```
+```ruby
   plugin.use_component :kickflip, outlet: :before_motion_description
 ```
 
 And voila! Custom code almost anywhere you'd like in the angular interface.
 
 ### Add database migrations
-(not working yet)
+If you need a spot in the database to store all the cool stuff your plugin is doing, we can make a new table using the `use_database_table` command like this:
+
+```ruby
+  plugin.use_database_table :kickflip do |table|
+    table.belongs_to :skater
+    table.integer :point_value
+    table.timestamps
+  end
+```
+Note that that `do` block can accept anything you'd put in a typical `create_table` block in a migration
+
+Also note that while you can add new tables to the schema, we don't support modifying the existing tables in Loomio core via plugin.
 
 ### Adding translations to your plugin
 If you're writing templates, it may be that you wish to include translatable strings in them. We support a super easy way of including yml translations with your plugin.
