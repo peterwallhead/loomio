@@ -19,6 +19,7 @@ class Motion < ActiveRecord::Base
   has_many :did_not_voters, through: :did_not_votes, source: :user
   has_many :events,        -> { includes(:eventable) }, as: :eventable, dependent: :destroy
   has_many :motion_readers, dependent: :destroy
+  has_many :specifics, as: :specifiable
 
   validates_presence_of :name, :discussion, :author, :closing_at
   validate :closes_in_future_unless_closed

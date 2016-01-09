@@ -153,6 +153,7 @@ class Group < ActiveRecord::Base
   has_many :discussions, dependent: :destroy
   has_many :motions, through: :discussions
   has_many :votes, through: :motions
+  has_many :specifics, as: :specifiable
 
   belongs_to :parent, class_name: 'Group'
   belongs_to :creator, class_name: 'User'

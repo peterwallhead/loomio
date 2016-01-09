@@ -5,6 +5,7 @@ class Vote < ActiveRecord::Base
   belongs_to :user
   belongs_to :previous_vote, class_name: 'Vote'
   has_many :events, as: :eventable, dependent: :destroy
+  has_many :specifics, as: :specifiable
 
   validates_presence_of :motion, :user, :position
   validates_inclusion_of :position, in: POSITIONS
