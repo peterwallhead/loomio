@@ -16,7 +16,7 @@ module Plugins
       return unless plugin.enabled || plugin.installed
 
       plugin.actions.map(&:call)
-      plugin.outlets.map { |outlet| apply_outlet(outlet, plugin.name) }
+      plugin.outlets.map { |outlet| apply_outlet(outlet) }
       plugin.events.map  { |events| events.call(EventBus) }
       plugin.installed = true
     end
@@ -32,9 +32,8 @@ module Plugins
       }
     end
 
-    def self.apply_outlet(outlet, name)
-      raise "Error installing #{name}: Outlet #{outlet} is already being used by #{active_outlets[outlet]}" if active_outlets[outlet]
-      active_outlets[outlet] = name
+    def self.apply_outlet(outlet)
+      active_outlets[outlet.outlet_name] = active_outlets[outlet.outlet_name] << outlet
     end
 
     def self.active_plugins
@@ -42,7 +41,7 @@ module Plugins
     end
 
     def self.active_outlets
-      @@active_outlets ||= Hash.new
+      @@active_outlets ||= Hash.new { [] }
     end
     private_class_method :active_outlets
 

@@ -2,6 +2,7 @@ require "#{Rails.root}/plugins/repository"
 
 module Plugins
   class NoCodeSpecifiedError < Exception; end
+  Outlet = Struct.new(:plugin, :component, :outlet_name)
 
   class Base
     attr_accessor :name, :installed
@@ -56,9 +57,9 @@ module Plugins
       @events.add block.to_proc
     end
 
-    def use_component(path, name)
-      [:coffee, :scss, :haml].each { |ext| use_asset("#{path}/#{name}.#{ext}") }
-      @outlets.add name
+    def use_component(component, outlet: nil)
+      [:coffee, :scss, :haml].each { |ext| use_asset("components/#{component}/#{component}.#{ext}") }
+      @outlets.add Outlet.new(@name, component, outlet) if outlet
     end
 
     private
