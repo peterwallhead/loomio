@@ -1,0 +1,24 @@
+.position-specific-position-fields
+
+  .position-specific--collapsed{ng-show: '!expanded'}
+    .position-specific__description{translate: 'position_specific.description'}
+    %button{type: 'button', ng-click: 'expand()'}
+      %i.fa.fa-plus-square-o
+
+  .position-specific--expanded{ng-show: 'expanded'}
+    %fieldset{ng-disabled: '!proposal.canBeEdited()'}
+      .lmo-form-group
+        %label{translate: 'position_specific.agree'}
+        %input.form-control{ng-model: 'proposal.agreeDescription'}
+
+      .lmo-form-group
+        %label{translate: 'position_specific.abstain'}
+        %input.form-control{ng-model: 'proposal.abstainDescription'}
+
+      .lmo-form-group
+        %label{translate: 'position_specific.disagree'}
+        %input.form-control{ng-model: 'proposal.disagreeDescription'}
+
+      .lmo-form-group
+        %label{translate: 'position_specific.block'}
+        %input.form-control{ng-model: 'proposal.blockDescription'}

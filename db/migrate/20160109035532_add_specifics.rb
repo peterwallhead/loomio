@@ -1,9 +1,9 @@
 class AddSpecifics < ActiveRecord::Migration
   def change
-    create_table :specific do |t|
+    create_table :specifics do |t|
       t.belongs_to :specifiable, polymorphic: true
       t.string :key
-      t.string :value
+      t.column :value, :hstore
       t.timestamps
     end
   end

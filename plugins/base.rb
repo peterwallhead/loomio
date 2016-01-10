@@ -34,6 +34,7 @@ module Plugins
     end
 
     def use_database_table(table_name, &block)
+      raise NoCodeSpecifiedError.new unless block_given?
       return puts "#{table_name} already exists; no migration performed" if ActiveRecord::Base.connection.table_exists?(table_name)
 
       migration = ActiveRecord::Migration.new
@@ -56,11 +57,6 @@ module Plugins
     def use_translations(path, filename = :client)
       raise NoCodeSpecifiedError.new unless path
       Dir.chdir("plugins/#{@name}") { Dir.glob("#{path}/#{filename}.*.yml").each { |path| use_translation(path) } }
-    end
-
-    def use_migration(path = nil, &block)
-      raise NoCodeSpecifiedError.new unless block_given? || path
-      # ???
     end
 
     def use_events(&block)

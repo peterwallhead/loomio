@@ -657,11 +657,11 @@ ActiveRecord::Schema.define(version: 20160109035532) do
   add_index "organisation_visits", ["organisation_id"], name: "index_organisation_visits_on_organisation_id", using: :btree
   add_index "organisation_visits", ["visit_id", "organisation_id"], name: "index_organisation_visits_on_visit_id_and_organisation_id", unique: true, using: :btree
 
-  create_table "specific", force: :cascade do |t|
+  create_table "specifics", force: :cascade do |t|
     t.integer  "specifiable_id"
     t.string   "specifiable_type"
     t.string   "key"
-    t.string   "value"
+    t.hstore   "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

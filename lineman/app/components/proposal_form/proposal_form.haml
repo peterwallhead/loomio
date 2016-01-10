@@ -21,9 +21,8 @@
         %label{for: 'proposal-details-field', translate: 'proposal_form.details_label'}
         %textarea.lmo-textarea.proposal-form__details-field.form-control.lmo-primary-form-input#proposal-details-field{msd-elastic: 'true', ng-model: 'proposal.description', ng-model-options: '{debounce: 600}', ng-change: 'storeDraft()', placeholder: "{{ 'proposal_form.details_placeholder' | translate }}"}
 
-      %closing_at_field{proposal: 'proposal'}
-
       %outlet{name: 'after-proposal-form'}
+      %closing_at_field{proposal: 'proposal'}
 
   .modal-footer
     %button.lmo-btn--submit.proposal-form__start-btn{ng-if: 'proposal.isNew()', type: 'submit', translate: 'proposal_form.start_proposal'}
