@@ -1,5 +1,5 @@
 module Plugins
-  module LoomioWebhooks
+  module PositionSpecific
     class Plugin < Plugins::Base
 
       setup! :position_specific do |plugin|
@@ -7,6 +7,14 @@ module Plugins
 
         plugin.use_component :position_fields, outlet: :after_proposal_form
         plugin.use_component :position_voting, outlet: :after_position_buttons
+
+        plugin.use_class :routes
+
+        plugin.extend_class API::MotionsController do
+          def descriptions
+            render json: load_and_authorize(:motion).specifics.find_by(key: :position_descriptions).try(:value) || {}
+          end
+        end
 
         plugin.extend_class PermittedParams do
           def motion_attributes
@@ -27,6 +35,7 @@ module Plugins
           end
 
           def save_position_descriptions
+            return unless position_descriptions.values.compact.any?
             specifics.find_or_initialize_by(key: :position_descriptions).update(value: position_descriptions)
           end
         end

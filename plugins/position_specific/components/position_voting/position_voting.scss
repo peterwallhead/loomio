@@ -2,15 +2,26 @@
   display: none;
 }
 
-.position_buttons_panel__buttons.show-descriptions {
+.position-voting > .position_buttons_panel__buttons {
   display: block;
 }
 
-.position_buttons_panel__buttons.show-descriptions button {
-   display: block;
-   margin: 10px;
-   height: 25px;
-   width: 25px;
-   border-radius: 5px 0 0 5px;
-   background-size: 35px;
- }
+.position_buttons_panel__buttons.show-descriptions {
+  button {
+    display: block;
+    margin: 10px;
+    height: 25px;
+    width: 25px;
+    border-radius: 5px 0 0 5px;
+    background-size: 35px;
+  }
+  label {
+    display: block;
+    padding-left: 25px;
+    line-height: 0;
+  }
+}
+
+.position_buttons_panel__description {
+  display: none;
+}
