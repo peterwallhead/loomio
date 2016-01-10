@@ -44,6 +44,8 @@ module Plugins
           event_bus.listen('motion_create', 'motion_update') { |motion| motion.save_position_descriptions }
         end
 
+        plugin.use_translations 'config/locales', :position_specific
+
       end
     end
   end

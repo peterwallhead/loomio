@@ -2,23 +2,24 @@
 
   .position-specific--collapsed{ng-show: '!expanded'}
     .position-specific__description{translate: 'position_specific.description'}
-    %button{type: 'button', ng-click: 'expand()'}
+    %button.close{type: 'button', ng-click: 'expand()'}
       %i.fa.fa-plus-square-o
+    .clearfix
 
   .position-specific--expanded{ng-show: 'expanded'}
     %fieldset{ng-disabled: '!proposal.canBeEdited()'}
       .lmo-form-group
         %label{translate: 'position_specific.agree'}
-        %input.form-control{ng-model: 'proposal.agreeDescription'}
+        %input.form-control{ng-model: 'proposal.agreeDescription', placeholder: '{{vote_form.i_agree_details | translate}}'}
 
       .lmo-form-group
         %label{translate: 'position_specific.abstain'}
-        %input.form-control{ng-model: 'proposal.abstainDescription'}
+        %input.form-control{ng-model: 'proposal.abstainDescription', placeholder: '{{vote_form.i_abstain_details | translate}}'}
 
       .lmo-form-group
         %label{translate: 'position_specific.disagree'}
-        %input.form-control{ng-model: 'proposal.disagreeDescription'}
+        %input.form-control{ng-model: 'proposal.disagreeDescription', placeholder: '{{vote_form.i_disagree_details | translate}}'}
 
       .lmo-form-group
         %label{translate: 'position_specific.block'}
-        %input.form-control{ng-model: 'proposal.blockDescription'}
+        %input.form-control{ng-model: 'proposal.blockDescription', placeholder: '{{vote_form.i_block_details | translate}}'}

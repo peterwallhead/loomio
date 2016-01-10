@@ -5,22 +5,18 @@
       .sr-only{translate: 'vote_form.i_agree'}
       %label.position_buttons_panel__description
         {{ descriptions.agree_description }}
-    .blank
 
     %button.position-button.position-button--abstain{ng-click: 'select("abstain")'}
       .sr-only{translate: 'vote_form.i_abstain'}
       %label.position_buttons_panel__description
         {{ descriptions.abstain_description }}
-    .blank
 
     %button.position-button.position-button--no{ng-click: 'select("no")'}
       .sr-only{translate: 'vote_form.i_disagree'}
       %label.position_buttons_panel__description
         {{ descriptions.disagree_description }}
-    .blank
 
     %button.position-button.position-button--block{ng-click: 'select("block")'}
       .sr-only{translate: 'vote_form.i_block'}
       %label.position_buttons_panel__description
         {{ descriptions.block_description }}
-    .blank

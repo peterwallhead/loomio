@@ -1,0 +1,7 @@
+en:
+  position_specific:
+    description: "Provide more context for what voting on this proposal means"
+    agree: "Agree:"
+    abstain: "Abstain:"
+    disagree: "Disagree:"
+    block: "Block:"
