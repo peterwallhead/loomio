@@ -69,6 +69,14 @@ module Plugins
       @outlets.add Outlet.new(@name, component, outlet) if outlet
     end
 
+    def use_route(verb, route, action)
+      @actions.add Proc.new {
+        Loomio::Application.routes.append do
+          namespace(:api, path: 'api/v1', defaults: {format: :json}) { send(verb, { route => action }) }
+        end
+      }.to_proc
+    end
+
     private
 
     def use_asset(path)

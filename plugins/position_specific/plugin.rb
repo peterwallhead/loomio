@@ -8,7 +8,7 @@ module Plugins
         plugin.use_component :position_fields, outlet: :after_proposal_form
         plugin.use_component :position_voting, outlet: :after_position_buttons
 
-        plugin.use_class :routes
+        plugin.use_route :get, 'proposals/:id/descriptions', 'motions#descriptions'
 
         plugin.extend_class API::MotionsController do
           def descriptions
