@@ -48,16 +48,24 @@ describe API::ReactionsController do
       expect(comment.reload.reaction_for(user_a)).to eq 'reaction'
     end
 
+    it 'does not allow unauthorized users to delete reactions' do
+      sign_in user_c
+      post :update, comment_id: comment.id
+      expect(response.status).to eq 403
+    end
+  end
+
+  describe 'destroy' do
     it 'removes an existing reaction by passing nil' do
       sign_in user_a
-      post :update, comment_id: comment.id, reaction: nil
+      delete :destroy, comment_id: comment.id
       expect(response.status).to eq 200
       expect(comment.reload.reaction_for(user_a)).to be_nil
     end
 
-    it 'does not allow unauthorized users to update reactions' do
+    it 'does not allow unauthorized users to delete reactions' do
       sign_in user_c
-      post :update, comment_id: comment.id
+      delete :destroy, comment_id: comment.id
       expect(response.status).to eq 403
     end
 

@@ -5,9 +5,18 @@ class API::ReactionsController < API::RestfulController
   end
 
   def update
+    render json: set_reaction(params[:reaction])
+  end
+
+  def destroy
+    render json: set_reaction(nil)
+  end
+
+  private
+
+  def set_reaction(reaction)
     load_and_authorize(:comment, :like)
-    @comment.set_reaction_for(current_user, params[:reaction])
-    render json: @comment.reaction_for(current_user)
+    @comment.set_reaction_for(current_user, reaction)
   end
 
 end

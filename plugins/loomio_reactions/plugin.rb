@@ -27,8 +27,9 @@ module Plugins
           end
         end
 
-        plugin.use_route :get,  '/reactions', 'reactions#index'
-        plugin.use_route :post, '/reactions', 'reactions#update'
+        plugin.use_route :get,    '/reactions', 'reactions#index'
+        plugin.use_route :post,   '/reactions', 'reactions#update'
+        plugin.use_route :delete, '/reactions', 'reactions#destroy'
 
       end
     end
