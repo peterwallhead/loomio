@@ -233,4 +233,9 @@ published_at "2015-11-18 14:28:30"
     payload {{ payload: 'payload' }}
   end
 
+  factory :specific do
+    association :specifiable, factory: :discussion
+    key :specific_key
+  end
+
 end
