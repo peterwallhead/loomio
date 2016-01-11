@@ -47,10 +47,6 @@ angular.module('loomioApp', ['ngNewRouter',
 
     $translateProvider.useSanitizeValueStrategy('escapeParameters');
 
-    # allow stubbing of unused plugin outlets
-    window.Loomio.plugins.stubOutlet = (outlet) ->
-      $controllerProvider.register _.capitalize(_.camelCase(outlet)), ->
-
   # disable angular debug stuff in production
   if window.Loomio? and window.Loomio.environment == 'production'
     $compileProvider.debugInfoEnabled(false);
