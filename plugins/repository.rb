@@ -16,8 +16,8 @@ module Plugins
       return unless plugin.enabled || plugin.installed
 
       plugin.actions.map(&:call)
-      plugin.outlets.map { |outlet| apply_outlet(outlet) }
-      plugin.events.map  { |events| events.call(EventBus) }
+      plugin.outlets.map       { |outlet| apply_outlet(outlet) }
+      plugin.events.map        { |events| events.call(EventBus) }
       plugin.installed = true
     end
 
@@ -27,8 +27,8 @@ module Plugins
 
     def self.to_config
       {
-        installed: active_plugins,
-        activeOutlets: active_outlets
+        installed:    active_plugins,
+        outlets:      active_outlets
       }
     end
 

@@ -3,6 +3,7 @@ require "#{Rails.root}/plugins/repository"
 module Plugins
   class NoCodeSpecifiedError < Exception; end
   class NoClassSpecifiedError < Exception; end
+  class InvalidAssetType < Exception; end
   Outlet = Struct.new(:plugin, :component, :outlet_name)
 
   class Base
@@ -80,22 +81,22 @@ module Plugins
     private
 
     def use_asset(path)
+      raise InvalidAssetType.new unless dest = asset_destination_for(path)
       file_path = [Rails.root, :plugins, @name, path].join('/')
-      dest_path = [Rails.root, :lineman, :app, :plugins, @name, path].join('/')
+      dest_path = [Rails.root, :lineman, dest, :plugins, @name, path].join('/')
       dest_folder = dest_path.split('/')[0...-1].join('/') # drop filename so we can create the directory beforehand
       @actions.add Proc.new { FileUtils.mkdir_p(dest_folder) && FileUtils.cp(file_path, dest_path) }
     end
 
+    def asset_destination_for(path)
+      case path.split('.').last
+      when 'scss', 'coffee', 'haml' then :app
+      when 'js', 'css'              then :vendor
+      end
+    end
+
     def use_translation(path)
       @translations.deep_merge! YAML.load_file(path)
-    end
-
-    def use_script(path)
-      use_asset [path, :coffee].join('.')
-    end
-
-    def use_stylesheet(path)
-      use_asset [path, :scss].join('.')
     end
 
     def use_directory(glob)

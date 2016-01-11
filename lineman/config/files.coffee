@@ -44,4 +44,6 @@ module.exports = require(process.env["LINEMAN_MAIN"]).config.extend "files",
              "node_modules/angular_record_store/dist/standalone.js",
              "vendor/bower_components/angular-elastic/elastic.js",
              "vendor/bower_components/checklist-model/checklist-model.js",
-             "vendor/bower_components/angular-clipboard/angular-clipboard.js"]
+             "vendor/bower_components/angular-clipboard/angular-clipboard.js",
+             "vendor/plugins/**/*.js"
+           ]

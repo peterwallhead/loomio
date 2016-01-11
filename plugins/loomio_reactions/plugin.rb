@@ -6,11 +6,15 @@ module Plugins
         plugin.enabled = true
 
         # plugin.use_component :reaction_form
-        # plugin.use_component :reaction_display
+        plugin.use_component :reaction_display, outlet: :after_comment_event
 
         plugin.use_class 'controllers/reactions_controller'
 
         plugin.extend_class Comment do
+          def reactions
+            @reactions ||= specifics.find_or_initialize_by(key: :reactions)
+          end
+
           def reaction_for(user)
             reactions.value[user.username]
           end
@@ -19,17 +23,12 @@ module Plugins
             reactions.value[user.username] = reaction
             reactions.save
           end
-
-          private
-
-          def reactions
-            @reactions ||= specifics.find_or_initialize_by(key: :reactions)
-          end
         end
 
-        plugin.use_route :get,    '/reactions', 'reactions#index'
-        plugin.use_route :post,   '/reactions', 'reactions#update'
-        plugin.use_route :delete, '/reactions', 'reactions#destroy'
+        plugin.use_asset_directory :"emoji-one"
+
+        plugin.use_route :get,  '/comments/:id/reactions', 'reactions#index'
+        plugin.use_route :post, '/comments/:id/reactions', 'reactions#update'
 
       end
     end

@@ -1,22 +1,28 @@
 class API::ReactionsController < API::RestfulController
 
   def index
-    render json: load_and_authorize(:comment).specifics.find_or_initialize_by(key: :reactions).value
+    load_and_authorize(:comment)
+    respond_with_reactions
   end
 
   def update
-    render json: set_reaction(params[:reaction])
+    set_reaction(params[:reaction])
+    respond_with_reactions
   end
 
   def destroy
-    render json: set_reaction(nil)
+    set_reaction(nil)
+    respond_with_reactions
   end
 
   private
 
   def set_reaction(reaction)
-    load_and_authorize(:comment, :like)
-    @comment.set_reaction_for(current_user, reaction)
+    load_and_authorize(:comment, :like).set_reaction_for(current_user, reaction)
+  end
+
+  def respond_with_reactions
+    render json: @comment.reactions.value
   end
 
 end

@@ -40,5 +40,6 @@
       %a{lmo-href-for: 'comment'}>
         %timeago{timestamp: 'comment.createdAt' }>
 
+    %outlet{name: 'after-comment-event'}
     .thread-item__liked-by{ng_show: 'anybodyLikesIt()'}
       {{ likedBySentence }}
