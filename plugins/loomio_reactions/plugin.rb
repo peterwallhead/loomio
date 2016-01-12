@@ -5,7 +5,7 @@ module Plugins
       setup! :loomio_reactions do |plugin|
         plugin.enabled = true
 
-        # plugin.use_component :reaction_form
+        plugin.use_component :reaction_form, outlet: :after_comment_like
         plugin.use_component :reaction_display, outlet: :after_comment_event
 
         plugin.use_class 'controllers/reactions_controller'
@@ -15,17 +15,17 @@ module Plugins
             @reactions ||= specifics.find_or_initialize_by(key: :reactions)
           end
 
-          def reaction_for(user)
-            reactions.value[user.username]
-          end
-
           def set_reaction_for(user, reaction)
-            reactions.value[user.username] = reaction
+            reactions.value[reaction] = Array(reactions.value[reaction]).push(user.username)
             reactions.save
           end
-        end
 
-        plugin.use_asset_directory :"emoji-one"
+          private
+
+          def reactions_for(reaction)
+            Array(reactions.value[reaction])
+          end
+        end
 
         plugin.use_route :get,  '/comments/:id/reactions', 'reactions#index'
         plugin.use_route :post, '/comments/:id/reactions', 'reactions#update'

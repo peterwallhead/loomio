@@ -34,6 +34,7 @@
       %button.thread-item__action.thread-item__action--like{type: 'button', translate: 'common.action.like', ng-show: '!currentUserLikesIt()', ng_click: 'like()'}>
       %button.thread-item__action{type: 'button', translate: 'common.action.unlike', ng_click: 'unlike()', ng-show: 'currentUserLikesIt()'}>
       %span{aria-hidden: 'true'}>·
+      %outlet{name: 'comment-after-like'}
       %button.thread-item__action.thread-item__action--reply{translate: 'common.action.reply', type: 'button', ng_click: 'reply()'}>
       %translate_button{model: 'comment', showdot: 'true'}
       %span{aria-hidden: 'true'}>·
