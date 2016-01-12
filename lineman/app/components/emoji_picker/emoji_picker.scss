@@ -16,10 +16,22 @@
   bottom: 30px;
 }
 
+.emoji-picker__hr {
+  margin: 10px 0;
+}
+
+.emoji-picker__hovered-name {
+  display: inline-block;
+  max-width: 145px;
+  word-break: normal;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
 .emoji-picker__selector {
   display: inline-block;
   &:hover {
-    background: lighten($loomio-orange, 25%);
+    background: lighten($link-color, 50%);
     border-radius: 100%;
     cursor: pointer;
   }
@@ -33,4 +45,11 @@
 
 .emoji-picker__search {
   margin-bottom: 0;
+}
+
+.emoji-picker__none-found {
+  @include fontSmall;
+  padding: 5px 0 10px;
+  color: $grey-on-white;
+  text-align: center;
 }

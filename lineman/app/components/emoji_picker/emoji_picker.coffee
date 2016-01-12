@@ -6,12 +6,11 @@ angular.module('loomioApp').directive 'emojiPicker', ->
     $scope.render = EmojiService.render
 
     $scope.swapTerm = (term) ->
-      $scope.searching = true
+      $scope.hovered = {}
       $scope.source = if $scope.term
         _.take _.filter(EmojiService.source, (emoji) -> emoji.match $scope.term), 10
       else
         EmojiService.defaults
-      $scope.searching = false
     $scope.swapTerm('')
     $scope.$watch 'term', (term) ->
       $scope.swapTerm(term)
@@ -19,7 +18,16 @@ angular.module('loomioApp').directive 'emojiPicker', ->
     $scope.openMenu = ->
       $scope.showMenu = true
 
+    $scope.hover = (emoji) ->
+      $scope.hovered =
+        name: emoji
+        image: $scope.render(emoji)
+
     $scope.select = (emoji) ->
       $scope.showMenu = false
+      $scope.hovered = {}
       $scope.term = ''
       $scope.$emit 'emojiSelected', emoji
+
+    $scope.noEmojisFound = ->
+      $scope.source.length == 0
