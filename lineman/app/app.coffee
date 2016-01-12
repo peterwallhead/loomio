@@ -13,26 +13,15 @@ angular.module('loomioApp', ['ngNewRouter',
                              'angular-clipboard',
                              'checklist-model',
                              'monospaced.elastic',
-                             'angularMoment']).config ($httpProvider, $locationProvider, $translateProvider, markedProvider, $compileProvider, $animateProvider, $controllerProvider) ->
+                             'angularMoment',
+                             'offClick']).config ($httpProvider, $locationProvider, $translateProvider, markedProvider, $compileProvider, $animateProvider, renderProvider) ->
 
   # this should make stuff faster but you need to add "animated" class to animated things.
   # http://www.bennadel.com/blog/2935-enable-animations-explicitly-for-a-performance-boost-in-angularjs.htm
   $animateProvider.classNameFilter( /\banimated\b/ );
 
-  #configure markdown
-  applyMentionsFor = (tag, text)->
-    text = text.replace(/\[\[@([a-zA-Z0-9]+)\]\]/g, "<a class='lmo-user-mention' href='/u/$1'>@$1</a>")
-    "<#{tag}>#{text}</#{tag}>"
-
-  renderer = new marked.Renderer()
-  renderer.link = (href, title, text) ->
-    "<a href='" + href + "' title='" + (title || text) + "' target='_blank'>" + text + "</a>";
-  renderer.paragraph = (text) -> applyMentionsFor 'p', text
-  renderer.listitem  = (text) -> applyMentionsFor 'li', text
-  renderer.tablecell = (text) -> applyMentionsFor 'td', text
-
   markedProvider.setOptions
-    renderer: renderer
+    renderer: renderProvider.$get().createRenderer()
     gfm: true
     sanitize: true
     breaks: true

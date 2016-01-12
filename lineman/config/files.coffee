@@ -45,5 +45,6 @@ module.exports = require(process.env["LINEMAN_MAIN"]).config.extend "files",
              "vendor/bower_components/angular-elastic/elastic.js",
              "vendor/bower_components/checklist-model/checklist-model.js",
              "vendor/bower_components/angular-clipboard/angular-clipboard.js",
-             "vendor/plugins/**/*.js"
-           ]
+             "vendor/bower_components/emojione/lib/js/emojione.js",
+             "vendor/bower_components/angular-off-click/offClick.js"
+          ]

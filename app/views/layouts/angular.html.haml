@@ -19,12 +19,15 @@
     %start_menu{'ng-if' => 'isLoggedIn()'}
     %angular_feedback_card
 
+    = javascript_include_tag lineman_vendorjs_path
     :javascript
       window.Loomio = #{@appConfig.to_json.html_safe}
-      window.Loomio.plugins = window.Loomio.plugins || {}
-      window.Loomio.plugins.dependencies = window.Loomio.plugins.dependencies || []
+      window.Loomio.emojis = {
+        source: (emojione.shortnames || "").split('|'),
+        render: emojione.shortnameToImage,
+        defaults: ':heart:|:smiley:|:sweat_smile:|:star:|:rabbit:|:ok:|:thumbsup:|:nz:|:walking:|:clap:'.split('|')
+      }
 
-    = javascript_include_tag lineman_vendorjs_path
     = javascript_include_tag lineman_appjs_path
 
     - if Rails.application.secrets.faye_url.present?
