@@ -23,9 +23,10 @@ angular.module('loomioApp').directive 'emojiPicker', ->
           document.querySelector('.comment-form__comment-field').focus()
 
     $scope.hideMenu = ->
+      return unless $scope.showMenu
       $scope.hovered = {}
       $scope.term = ''
-      $scope.showMenu = false
+      $scope.toggleMenu()
     KeyEventService.registerKeyEvent $scope, 'pressedEsc', $scope.toggleMenu, -> $scope.showMenu
 
     $scope.hover = (emoji) ->
