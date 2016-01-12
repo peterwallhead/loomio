@@ -9,7 +9,7 @@
 
 .emoji-picker__menu {
   @include card;
-  width: 365px;
+  width: 190px;
   padding: 6px;
   position: absolute;
   right: 0;
@@ -25,7 +25,7 @@
   }
 }
 
-.emoji-picker__selector img {
+.emoji-picker__selector img.emojione {
   width: 35px;
   height: 35px;
   padding: 5px;

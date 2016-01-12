@@ -2,20 +2,19 @@ angular.module('loomioApp').directive 'emojiPicker', ->
   restrict: 'E'
   replace: true
   templateUrl: 'generated/components/emoji_picker/emoji_picker.html'
-  controller: ($scope, $timeout) ->
-    $scope.render = window.Loomio.emojis.render
+  controller: ($scope, EmojiService) ->
+    $scope.render = EmojiService.render
 
     $scope.swapTerm = (term) ->
       $scope.searching = true
       $scope.source = if $scope.term
-        _.take _.filter(window.Loomio.emojis.source, (emoji) -> emoji.match $scope.term), 10
+        _.take _.filter(EmojiService.source, (emoji) -> emoji.match $scope.term), 10
       else
-        _.take window.Loomio.emojis.source, 100
+        EmojiService.defaults
       $scope.searching = false
     $scope.swapTerm('')
     $scope.$watch 'term', (term) ->
-      $timeout ->
-        $scope.swapTerm(term)
+      $scope.swapTerm(term)
 
     $scope.openMenu = ->
       $scope.showMenu = true
