@@ -2,7 +2,7 @@ angular.module('loomioApp').directive 'emojiPicker', ->
   restrict: 'E'
   replace: true
   templateUrl: 'generated/components/emoji_picker/emoji_picker.html'
-  controller: ($scope, EmojiService) ->
+  controller: ($scope, $timeout, EmojiService, KeyEventService) ->
     $scope.render = EmojiService.render
 
     $scope.swapTerm = (term) ->
@@ -12,11 +12,21 @@ angular.module('loomioApp').directive 'emojiPicker', ->
       else
         EmojiService.defaults
     $scope.swapTerm('')
-    $scope.$watch 'term', (term) ->
-      $scope.swapTerm(term)
+    $scope.$watch 'term', $scope.swapTerm
 
-    $scope.openMenu = ->
-      $scope.showMenu = true
+    $scope.toggleMenu = ->
+      $scope.showMenu = !$scope.showMenu
+      $timeout ->
+        if $scope.showMenu
+          document.querySelector('.emoji-picker__search').focus()
+        else
+          document.querySelector('.comment-form__comment-field').focus()
+
+    $scope.hideMenu = ->
+      $scope.hovered = {}
+      $scope.term = ''
+      $scope.showMenu = false
+    KeyEventService.registerKeyEvent $scope, 'pressedEsc', $scope.toggleMenu, -> $scope.showMenu
 
     $scope.hover = (emoji) ->
       $scope.hovered =
@@ -24,10 +34,8 @@ angular.module('loomioApp').directive 'emojiPicker', ->
         image: $scope.render(emoji)
 
     $scope.select = (emoji) ->
-      $scope.showMenu = false
-      $scope.hovered = {}
-      $scope.term = ''
       $scope.$emit 'emojiSelected', emoji
+      $scope.hideMenu()
 
     $scope.noEmojisFound = ->
       $scope.source.length == 0
