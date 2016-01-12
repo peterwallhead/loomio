@@ -25,8 +25,8 @@
     "svg.js": "latest",
     "angular-elastic": "latest",
     "angular-clipboard": "latest",
-    "checklist-model": "latest"
-
+    "checklist-model": "latest",
+    "emojione": "latest"
   },
   "devDependencies": {
     "angular-mocks": "1.4.0-rc.0"
