@@ -47,7 +47,7 @@ angular.module('loomioApp').directive 'commentForm', ->
       ids.splice ids.indexOf(attachmentId), 1
 
     $scope.$on 'emojiSelected', (event, emoji) ->
-      $scope.comment.body = $scope.comment.body.trimRight() + " " + emoji + " "
+      $scope.comment.body = $scope.comment.body.trimRight() + " #{emoji} "
 
     $scope.updateMentionables = (fragment) ->
       regex = new RegExp("(^#{fragment}| +#{fragment})", 'i')
