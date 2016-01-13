@@ -1,32 +1,54 @@
 require 'rails_helper'
 
 describe API::ReactionsController do
-  let(:specific) { create :specific, specifiable: comment, key: :reactions, value: { user_a.username => 'user_a', user_b.username => 'user_b' } }
+  let(:specific) { create :specific, specifiable: comment, key: :reactions, value: { user_a.username => 'reaction_a', user_b.username => 'reaction_b' } }
   let(:user_a) { create :user }
   let(:user_b) { create :user }
   let(:user_c) { create :user }
-  let(:comment) { create :comment }
+  let(:discussion) { create :discussion }
+  let(:another_comment) { create :comment }
+  let(:comment) { create :comment, discussion: discussion }
 
   before do
-    comment.discussion.group.add_member! user_a
-    comment.discussion.group.add_member! user_b
+    discussion.group.add_member! user_a
+    discussion.group.add_member! user_b
   end
+
+  # sample output:
+  # [<comment_id>: {
+  #   <emoji_name>: [<username>, <username>],
+  #   <emoji_name>: [<username, username>]
+  # },
+  # <comment_id>: {
+  #   <emoji_name>: [<username>, <username>],
+  #   <emoji_name>: [<username, username>]
+  # }]
 
   describe 'index' do
 
     it 'shows a list of reactions for a given comment' do
       sign_in user_a
       specific
-      get :index, comment_id: comment.id
+      get :index, discussion_id: discussion.id
+
       json = JSON.parse(response.body)
-      expect(json.keys.length).to eq 2
-      expect(json[user_a.username]).to eq 'user_a'
-      expect(json[user_b.username]).to eq 'user_b'
+      expect(json.keys).to include comment.id
+      expect(json.keys).to_not include comment.id
+
+      comment_json = json[comment.id]
+      expect(comment_json.keys).to include 'reaction_a'
+      expect(comment_json.keys).to include 'reaction_b'
+      expect(comment_json.keys).to_not include 'reaction_c'
+
+      reaction_json = comment_json['reaction_a']
+      expect(reaction_json).to include user_a.username
+      expect(reaction_json).to include user_b.username
+      expect(reaction_json).to_not include user_c.username
     end
 
     it 'returns unauthorized if the user cannot see the comment' do
       sign_in user_c
-      get :index, comment_id: comment.id
+      get :index, discussion_id: discussion.id
       expect(response.status).to eq 403
     end
   end

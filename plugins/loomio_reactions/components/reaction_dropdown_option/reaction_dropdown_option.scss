@@ -1,0 +1,21 @@
+.thread-item--comment .lmo-drop-dropdown-option {
+  transition: opacity 0.5s;
+  opacity: 0;
+}
+
+.thread-item--comment:hover .reaction-dropdown-form {
+  opacity: .5;
+}
+
+.thread-item--comment:hover .reaction-dropdown-form:hover {
+  opacity: 1;
+}
+
+.reaction-dropdown-option {
+  background: transparent;
+  border: none;
+}
+
+.reaction-dropdown-option .emoji-picker__toggle {
+  font-size: 18px;
+}

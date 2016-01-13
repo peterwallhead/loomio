@@ -1,9 +1,11 @@
 angular.module('loomioApp').directive 'emojiPicker', ->
+  scope: {menuonly: '@'}
   restrict: 'E'
   replace: true
   templateUrl: 'generated/components/emoji_picker/emoji_picker.html'
   controller: ($scope, $timeout, EmojiService, KeyEventService) ->
     $scope.render = EmojiService.render
+    $scope.showMenu = $scope.menuonly
 
     $scope.swapTerm = (term) ->
       $scope.hovered = {}

@@ -5,8 +5,10 @@ module Plugins
       setup! :loomio_reactions do |plugin|
         plugin.enabled = true
 
-        plugin.use_component :reaction_form, outlet: :after_comment_like
-        plugin.use_component :reaction_display, outlet: :after_comment_event
+        plugin.use_component :reaction_fetcher,         outlet: :thread_page_column_right
+        plugin.use_component :reaction_display,         outlet: :after_comment_event
+        plugin.use_component :reaction_dropdown_option, outlet: :before_comment_dropdown
+        plugin.use_component :reaction_form
 
         plugin.use_class 'controllers/reactions_controller'
 
@@ -27,7 +29,7 @@ module Plugins
           end
         end
 
-        plugin.use_route :get,  '/comments/:id/reactions', 'reactions#index'
+        plugin.use_route :get,  '/discussions/:id/reactions', 'reactions#index'
         plugin.use_route :post, '/comments/:id/reactions', 'reactions#update'
 
       end

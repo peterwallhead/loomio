@@ -85,7 +85,7 @@ module Plugins
       file_path = [Rails.root, :plugins, @name, path].join('/')
       dest_path = [Rails.root, :lineman, dest, :plugins, @name, path].join('/')
       dest_folder = dest_path.split('/')[0...-1].join('/') # drop filename so we can create the directory beforehand
-      @actions.add Proc.new { FileUtils.mkdir_p(dest_folder) && FileUtils.cp(file_path, dest_path) }
+      @actions.add Proc.new { FileUtils.mkdir_p(dest_folder) && FileUtils.cp(file_path, dest_path) if File.exist?(file_path) }
     end
 
     def asset_destination_for(path)

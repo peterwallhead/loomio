@@ -1,2 +1,5 @@
 .loomio-reactions-display
-  .loomio-reaction{ng-repeat: 'reaction in reactions', ng-bind-html: 'emojiFor(reaction)'}
+  .loomio-reaction{ng-repeat: 'reaction in reactionEmojis()'}
+    %span.loomio-reaction__icon{ng-bind-html: 'emojiFor(reaction)'}
+    %span.loomio-reaction__count {{ countFor(reaction) }}
+  %reaction_form{ng-if: 'showReactionForm()'}

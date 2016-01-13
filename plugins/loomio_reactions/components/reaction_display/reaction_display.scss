@@ -1,3 +1,16 @@
+.thread-item--comment .loomio-reactions-form {
+  transition: opacity 0.5s;
+  opacity: 0;
+}
+
+.thread-item--comment:hover .loomio-reactions-form {
+  opacity: .5;
+}
+
+.thread-item--comment:hover .loomio-reactions-form:hover {
+  opacity: 1;
+}
+
 .loomio-reaction {
   border: 1px solid #ccccff;
   background: #eeeeff;
@@ -10,4 +23,9 @@
 .loomio-reaction img.emojione {
   width: 15px;
   height: 15px;
+}
+
+.loomio-reaction__count {
+  padding: 3px;
+  vertical-align: middle;
 }

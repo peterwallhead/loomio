@@ -661,7 +661,7 @@ ActiveRecord::Schema.define(version: 20160109035532) do
     t.integer  "specifiable_id"
     t.string   "specifiable_type"
     t.string   "key"
-    t.hstore   "value",            default: {}
+    t.json     "value",            default: {}
     t.datetime "created_at"
     t.datetime "updated_at"
   end
