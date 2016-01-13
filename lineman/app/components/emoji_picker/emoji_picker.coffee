@@ -26,7 +26,6 @@ angular.module('loomioApp').directive 'emojiPicker', ->
       else
         document.querySelector($scope.targetSelector)
 
-
     $scope.hideMenu = ->
       return unless $scope.showMenu
       $scope.hovered = {}
