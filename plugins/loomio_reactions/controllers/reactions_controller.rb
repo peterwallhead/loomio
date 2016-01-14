@@ -5,12 +5,7 @@ class API::ReactionsController < API::RestfulController
   end
 
   def update
-    set_reaction(params[:reaction])
-    respond_with_reactions
-  end
-
-  def destroy
-    set_reaction(nil)
+    load_and_authorize(:comment, :like).update_reaction_for(current_user, params[:reaction])
     respond_with_reactions
   end
 
@@ -20,10 +15,6 @@ class API::ReactionsController < API::RestfulController
     Specific.where specifiable_type: "Comment",
                    specifiable_id: load_and_authorize(:discussion).comment_ids,
                    key: :reactions
-  end
-
-  def set_reaction(reaction)
-    load_and_authorize(:comment, :like).set_reaction_for(current_user, reaction)
   end
 
   def respond_with_reactions

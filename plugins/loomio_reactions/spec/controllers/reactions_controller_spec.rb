@@ -62,11 +62,11 @@ describe API::ReactionsController do
       expect(comment.reload.reaction_for(user_a)).to eq 'reaction'
     end
 
-    it 'updates an existing reaction for a user' do
+    it 'does not allow a duplicate reaction' do
       specific
       sign_in user_a
       post :update, comment_id: comment.id, reaction: 'reaction'
-      expect(response.status).to eq 200
+      expect(response.status).to eq 422
       expect(comment.reload.reaction_for(user_a)).to eq 'reaction'
     end
 

@@ -1,0 +1,21 @@
+.thread-item--comment .reaction-form {
+  transition: opacity 0.5s;
+  opacity: 0;
+}
+
+.thread-item--comment:hover .reaction-form {
+  opacity: .5;
+}
+
+.thread-item--comment:hover .reaction-form:hover {
+  opacity: 1;
+}
+
+.reaction-form__header {
+  background: transparent;
+  border: none;
+}
+
+.reaction-form__header .emoji-picker__toggle {
+  font-size: 18px;
+}

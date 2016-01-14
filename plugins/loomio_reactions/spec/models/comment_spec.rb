@@ -10,33 +10,16 @@ describe Comment do
 
     before { comment.discussion.group.add_member! user }
 
-    describe 'reaction_for' do
-      it 'returns the reaction for the given user' do
-        reactions.update(value: { user.username => reaction_text })
-        expect(comment.reaction_for(user)).to eq reaction_text
+    describe 'update_reaction_for' do
+      it 'adds a reaction if it does not exist' do
+        comment.update_reaction_for(user, reaction_text)
+        expect(comment.reload.reactions.value[reaction_text]).to eq [user.username]
       end
 
-      it 'returns nil when no reaction exists' do
-        expect(comment.reaction_for(user)).to be_nil
-      end
-    end
-
-    describe 'set_reaction_for' do
-      it 'sets the reaction for a user' do
-        comment.set_reaction_for(user, reaction_text)
-        expect(comment.reload.reaction_for(user)).to eq reaction_text
-      end
-
-      it 'replaces an existing reaction' do
-        reactions.update(value: { user.username => 'old_reaction' })
-        comment.set_reaction_for(user, reaction_text)
-        expect(comment.reload.reaction_for(user)).to eq reaction_text
-      end
-
-      it 'can remove an existing reaction' do
-        reactions.update(value: { user.username => 'old_reaction' })
-        comment.set_reaction_for(user, nil)
-        expect(comment.reload.reaction_for(user)).to be_nil
+      it 'removes an existing reaction if it exists' do
+        reactions.update(value: { reaction_text => user.username })
+        comment.update_reaction_for(user, reaction_text)
+        expect(comment.reload.reactions.value[reaction_text]).to eq []
       end
     end
   end

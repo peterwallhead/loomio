@@ -1,6 +1,6 @@
 .emoji-picker{off-click: 'hideMenu()'}
   %button.btn.btn-nude.emoji-picker__toggle{type: 'button', ng-click: 'toggleMenu()'}
-    %i.fa{class: 'fa-{{icon}}'}
+    %i.fa{ng-class: '{"fa-{{icon}}": true}'}
   .emoji-picker__menu{ng-if: 'showMenu'}
     .emoji-picker__preview{ng-show: 'hovered.name'}
       %span{ng-bind-html: 'hovered.image'}>

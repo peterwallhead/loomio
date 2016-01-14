@@ -1,9 +1,9 @@
 angular.module('loomioApp').directive 'emojiPicker', ->
-  scope: {targetSelector: '@'}
+  scope: {targetSelector: '@', icon: '@'}
   restrict: 'E'
   replace: true
   templateUrl: 'generated/components/emoji_picker/emoji_picker.html'
-  controller: ($scope, $timeout, EmojiService, KeyEventService) ->
+  controller: ($scope, $element, $timeout, EmojiService, KeyEventService) ->
     $scope.render = EmojiService.render
     $scope.icon = $scope.icon or 'smile-o'
 
@@ -29,7 +29,7 @@ angular.module('loomioApp').directive 'emojiPicker', ->
     $scope.hideMenu = ->
       return unless $scope.showMenu
       $scope.hovered = {}
-      $scope.term = ''
+      $scope.search('')
       $scope.toggleMenu()
     KeyEventService.registerKeyEvent $scope, 'pressedEsc', $scope.toggleMenu, -> $scope.showMenu
 

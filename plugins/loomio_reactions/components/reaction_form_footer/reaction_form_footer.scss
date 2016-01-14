@@ -1,0 +1,21 @@
+.reaction-form {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.reaction-form__footer .emoji-picker__menu {
+  left: 0;
+}
+
+.reaction-form__footer .emoji-picker__toggle {
+  font-size: 13px;
+}
+
+.reaction-form__footer {
+  background-color: #fbfbfb;
+}
+
+.reaction-form__footer .emoji-picker a {
+  font-size: 18px;
+}

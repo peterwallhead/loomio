@@ -3,8 +3,17 @@ angular.module('loomioApp').directive 'reactionDisplay', ->
   replace: true
   templateUrl: 'generated/plugins/loomio_reactions/components/reaction_display/reaction_display.html'
   controller: ($scope, Records, AbilityService, EmojiService) ->
+    $scope.react = (reaction) ->
+      Records.comments.remote.postMember($scope.comment.id, 'reactions', reaction: reaction).then (data) ->
+        reactions = $scope.discussionReactions()
+        _.extend reactions[$scope.comment.id], data
+        $scope.comment.discussion().update(reactions: reactions)
+
+    $scope.discussionReactions = ->
+      $scope.comment.discussion().reactions || {}
+
     $scope.reactions = ->
-      ($scope.comment.discussion().reactions || {})[$scope.comment.id]
+      $scope.discussionReactions()[$scope.comment.id]
 
     $scope.reactionEmojis = ->
       _.keys $scope.reactions()
