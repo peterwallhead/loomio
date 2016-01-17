@@ -1,0 +1,59 @@
+.peking-doge {
+  z-index: 10;
+  position: fixed;
+  left: 50%;
+  top: -25px;
+  transition: all 2s;
+}
+
+.peking-doge-image {
+  transform: rotate(180deg);
+  cursor: pointer;
+}
+
+.peking-doge-sayings {
+  position: relative;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 10px;
+  text-align: center;
+}
+
+.peking-doge-saying {
+  animation:spin 4s linear infinite;
+  position: absolute;
+  width: 100px;
+}
+
+.peking-doge-saying:nth-child(1) {
+  color: #FF00FF;
+  top: -10px;
+  left: 70px;
+}
+.peking-doge-saying:nth-child(2) {
+  color: #00910E;
+  top: -5px;
+  left: -17px;
+}
+.peking-doge-saying:nth-child(3) {
+  color: #3F00FF;
+  top: -60px;
+  left: 60px;
+}
+.peking-doge-saying:nth-child(4) {
+  color: #FF1A00;
+  left: -100px;
+  top: -40px;
+}
+
+.peking-doge.inview {
+  top: 46px;
+}
+
+.peking-doge img {
+  width: 75px;
+}
+
+@keyframes spin {
+  from   { transform: rotate(0deg); transform: rotateY(0deg); }
+  to     { transform: rotate(360deg); transform: rotateY(360deg); }
+}

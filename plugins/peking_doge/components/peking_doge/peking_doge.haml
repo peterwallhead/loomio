@@ -1,0 +1,8 @@
+.peking-doge{ng-class: '{"inview": visible}'}
+  .peking-doge-image{ng-click: 'setClicked()'}
+    %img{src: 'http://i.imgur.com/tpVHKXv.png'}
+  .peking-doge-sayings
+    .peking-doge-saying{ng-if: 'clicked1', translate: 'peking_doge.wow'}
+    .peking-doge-saying{ng-if: 'clicked2', translate: 'peking_doge.such_democracy'}
+    .peking-doge-saying{ng-if: 'clicked3', translate: 'peking_doge.very_autonomy'}
+    .peking-doge-saying{ng-if: 'clicked4', translate: 'peking_doge.how_to_decision'}

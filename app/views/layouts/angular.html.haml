@@ -12,6 +12,7 @@
     = render 'angular/intercom'
 
   %body{'ng-keydown' => 'keyDown($event)'}
+    %outlet{name: 'before-body'}
     %flash
     %navbar
     %ng_outlet{'ng-if' => '!pageError'}
