@@ -9,5 +9,5 @@ angular.module('loomioApp').directive 'reactionFormFooter', ->
       emoji = emoji.replace(/:/g, '')
       Records.comments.remote.postMember($scope.comment.id, 'reactions', reaction: emoji).then (data) ->
         reactions = $scope.comment.discussion().reactions
-        reactions[$scope.comment.id] = data
+        reactions[$scope.comment.id] = data.reactions
         $scope.comment.discussion().update(reactions: reactions)

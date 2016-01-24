@@ -6,7 +6,7 @@ angular.module('loomioApp').directive 'reactionDisplay', ->
     $scope.react = (reaction) ->
       Records.comments.remote.postMember($scope.comment.id, 'reactions', reaction: reaction).then (data) ->
         reactions = $scope.discussionReactions()
-        _.extend reactions[$scope.comment.id], data
+        _.extend reactions[$scope.comment.id], data.reactions
         $scope.comment.discussion().update(reactions: reactions)
 
     $scope.discussionReactions = ->
