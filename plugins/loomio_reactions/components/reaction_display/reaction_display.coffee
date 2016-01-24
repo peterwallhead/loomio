@@ -30,3 +30,4 @@ angular.module('loomioApp').directive 'reactionDisplay', ->
 
     $scope.$on 'reactionReceived', (event, data) ->
       ReactionService.updateCommentReactions($scope.comment, data)
+      $scope.$digest()
