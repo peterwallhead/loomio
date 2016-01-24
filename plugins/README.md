@@ -174,6 +174,19 @@ Note that that `do` block can accept anything you'd put in a typical `create_tab
 
 Also note that while you can add new tables to the schema, we don't support modifying the existing tables in Loomio core via plugin.
 
+### Add routes
+If your plugin needs to communicate between the client and server side, you'll want to set up a route.
+
+We can do this using the `use_route` command:
+
+```ruby
+  plugin.use_route :get,    '/kickflips/:id', 'kickflips#show'
+  plugin.use_route :post,   '/kickflips',     'kickflips#create'
+  plugin.use_route :delete, '/kickflips/:id', 'kickflips#destroy'
+```
+
+The above will create three routes which will call the `show`, `create`, and `destroy` method on `KickflipsController`, respectively.
+
 ### Adding translations to your plugin
 If you're writing templates, it may be that you wish to include translatable strings in them. We support a super easy way of including yml translations with your plugin.
 
