@@ -38,6 +38,7 @@ module Plugins
         plugin.use_route :post, '/comments/:id/reactions', 'reactions#update'
 
         plugin.use_asset 'services/reaction_service.coffee'
+        plugin.use_translations 'config/locales', :loomio_reactions
 
       end
     end

@@ -24,6 +24,9 @@ angular.module('loomioApp').directive 'reactionDisplay', ->
     $scope.emojiFor = (reaction) ->
       EmojiService.render(":#{reaction}:")
 
+    $scope.namesFor = (reaction) ->
+      $scope.reactions()[reaction].join(', ')
+
     $scope.showReactionForm = ->
       AbilityService.isLoggedIn() and
       _.any($scope.reactions())

@@ -1,5 +1,6 @@
 .loomio-reactions-display
-  %button.loomio-reaction{ng-click: 'react(reaction)', ng-if: 'countFor(reaction) > 0', ng-repeat: 'reaction in reactionEmojis()'}
+  %button.loomio-reaction.lmo-relative{ng-click: 'react(reaction)', ng-if: 'countFor(reaction) > 0', ng-repeat: 'reaction in reactionEmojis()'}
     %span.loomio-reaction__icon{ng-bind-html: 'emojiFor(reaction)'}
     %span.loomio-reaction__count {{ countFor(reaction) }}
+    %span.loomio-reaction__sentence{translate: 'loomio_reactions.reacted_with', translate-value-names: '{{namesFor(reaction)}}', translate-value-reaction: '{{reaction}}'}
   %reaction_form_footer{ng-if: 'showReactionForm()'}
