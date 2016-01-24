@@ -10,4 +10,4 @@ angular.module('loomioApp').directive 'reactionFormHeader', ->
       event.stopPropagation()
       emoji = emoji.replace(/:/g, '')
       Records.comments.remote.postMember($scope.comment.id, 'reactions', reaction: emoji).then (data) ->
-        # ReactionService.updateCommentReactions($scope.comment, data)
+        ReactionService.updateCommentReactions($scope.comment, data)

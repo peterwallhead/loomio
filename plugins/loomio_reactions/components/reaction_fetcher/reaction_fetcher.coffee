@@ -6,8 +6,4 @@ angular.module('loomioApp').directive 'reactionFetcher', ->
       $scope.threadPage.discussion.update(reactions: data)
 
     MessageChannelService.subscribeToDiscussion $scope.threadPage.discussion,
-      successFn: (subscriptions) ->
-        _.each subscriptions.data, (subscription) ->
-          PrivatePub.sign(subscription)
-          PrivatePub.subscribe subscription.channel, (data) ->
-            $scope.$broadcast('reactionReceived', data)
+      successFn: (data) -> $scope.$broadcast('reactionReceived', data)
