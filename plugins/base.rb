@@ -78,8 +78,6 @@ module Plugins
       }.to_proc
     end
 
-    private
-
     def use_asset(path)
       raise InvalidAssetType.new unless dest = asset_destination_for(path)
       file_path = [Rails.root, :plugins, @name, path].join('/')
@@ -87,6 +85,8 @@ module Plugins
       dest_folder = dest_path.split('/')[0...-1].join('/') # drop filename so we can create the directory beforehand
       @actions.add Proc.new { FileUtils.mkdir_p(dest_folder) && FileUtils.cp(file_path, dest_path) if File.exist?(file_path) }
     end
+
+    private
 
     def asset_destination_for(path)
       case path.split('.').last

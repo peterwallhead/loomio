@@ -37,6 +37,8 @@ module Plugins
         plugin.use_route :get,  '/discussions/:id/reactions', 'reactions#index'
         plugin.use_route :post, '/comments/:id/reactions', 'reactions#update'
 
+        plugin.use_asset 'services/reaction_service.coffee'
+
       end
     end
   end

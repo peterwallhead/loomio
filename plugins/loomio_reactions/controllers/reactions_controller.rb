@@ -13,7 +13,7 @@ class API::ReactionsController < API::RestfulController
   private
 
   def comment_reactions
-    { reactions: @comment.reactions.value.merge(comment_id: @comment.id) }
+    { reactions: @comment.reactions.value, comment_id: @comment.id }
   end
 
   def discussion_reactions

@@ -2,13 +2,15 @@ angular.module('loomioApp').factory 'MessageChannelService', ($http, $rootScope,
   new class MessageChannelService
 
     subscribe: (options = {}) ->
-      $http.post('/api/v1/message_channel/subscribe', options).then handleSubscriptions
+      success = options.successFn or handleSubscriptions
+      failure = options.failureFn or handleFailure
+      $http.post('/api/v1/message_channel/subscribe', options).then(success, failure)
 
-    subscribeToGroup: (group) ->
-      @subscribe { group_key: group.key }
+    subscribeToGroup: (group, options = {}) ->
+      @subscribe _.extend(options, { group_key: group.key })
 
-    subscribeToDiscussion: (discussion) ->
-      @subscribe { discussion_key: discussion.key }
+    subscribeToDiscussion: (discussion, options = {}) ->
+      @subscribe _.extend(options, { discussion_key: discussion.key })
 
     handleSubscriptions = (subscriptions) ->
       _.each subscriptions.data, (subscription) ->
@@ -41,3 +43,5 @@ angular.module('loomioApp').factory 'MessageChannelService', ($http, $rootScope,
           Records.import(data)
 
           $rootScope.$digest()
+
+    handleFailure = ->

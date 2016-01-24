@@ -2,7 +2,7 @@ angular.module('loomioApp').directive 'reactionDisplay', ->
   restrict: 'E'
   replace: true
   templateUrl: 'generated/plugins/loomio_reactions/components/reaction_display/reaction_display.html'
-  controller: ($scope, Records, AbilityService, EmojiService) ->
+  controller: ($scope, Records, AbilityService, EmojiService, ReactionService) ->
     $scope.react = (reaction) ->
       Records.comments.remote.postMember($scope.comment.id, 'reactions', reaction: reaction).then (data) ->
         reactions = $scope.discussionReactions()
@@ -27,3 +27,6 @@ angular.module('loomioApp').directive 'reactionDisplay', ->
     $scope.showReactionForm = ->
       AbilityService.isLoggedIn() and
       _.any($scope.reactions())
+
+    $scope.$on 'reactionReceived', (event, data) ->
+      ReactionService.updateCommentReactions($scope.comment, data)
