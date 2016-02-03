@@ -12,6 +12,7 @@ tmp/
 coverage
 public/assets
 public/system
+public/fonts
 .project
 Session.vim
 *.sql
