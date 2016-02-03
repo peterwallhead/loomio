@@ -9,6 +9,7 @@
           %a.lmo-dropdown-menu-item-label.thread-item__edit-link{href: "", ng-click: "editComment()", translate: "new_comment_item.context_menu.edit_comment"}
         %li.lmo-dropdown-menu-item{ng-if: "canDeleteComment()"}
           %a.lmo-dropdown-menu-item-label.thread-item__delete-link{href: "", ng-click: "deleteComment()", translate: "new_comment_item.context_menu.delete_comment"}
+  %outlet.pull-right{name: 'before-comment-dropdown', style: 'position: relative'}
 
   .thread-item__header.media
     .media-left
@@ -40,5 +41,7 @@
       %a{lmo-href-for: "comment"}>
         %timeago{timestamp: "comment.createdAt" }>
 
+    .clearfix
+    %outlet{name: 'after-comment-event'}
     .thread-item__liked-by{ng_show: "anybodyLikesIt()"}
       {{ likedBySentence }}
