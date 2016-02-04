@@ -12,8 +12,7 @@ module Plugins
 
     def should_execute?
       clean if force
-      puts "#{folder} alreadys exists in this repository" if already_there = File.directory?(folder)
-      !already_there
+      !File.directory?(folder)
     end
 
     def clean

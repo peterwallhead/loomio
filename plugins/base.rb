@@ -100,7 +100,7 @@ module Plugins
     end
 
     def use_directory(glob)
-      Dir.chdir("plugins/#{@name}") { Dir.glob("#{glob}/*").each { |path| yield path } }
+      Dir.chdir(@name.to_s) { Dir.glob("#{glob}/*").each { |path| yield path } }
     end
 
   end
