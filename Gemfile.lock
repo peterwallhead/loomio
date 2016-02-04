@@ -569,6 +569,7 @@ GEM
     rubyzip (1.1.7)
     s3_uploader (0.1.2)
       fog
+    safe_shell (1.0.3)
     safe_yaml (1.0.4)
     sass (3.4.13)
     sass-rails (5.0.3)
@@ -753,6 +754,7 @@ DEPENDENCIES
   rspec-rails
   ruby-progressbar
   s3_uploader
+  safe_shell
   sass-rails (>= 3.2)
   selenium-webdriver
   sequenced (~> 2.0.0)

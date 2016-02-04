@@ -1,24 +1,22 @@
 module Plugins
   class Repository
-    class PluginNotFoundError < Exception; end
 
-    def self.install_plugins!
-      Dir.glob('plugins/*/plugin.rb').each { |plugin_file| require [Rails.root, plugin_file].join('/') }
-      repository.keys.each { |name| install! name }
-    end
-
-    def self.store(plugin)
-      repository[plugin.name] = plugin
+    def self.acquire_plugins!
+      Dir.chdir('plugins') do
+        YAML.load_file([Rails.root, :config, :"plugins.yml"].join('/'))['plugins'].each do |plugin|
+          Fetcher.new(plugin[1]['repo'], plugin[1]['version']).execute
+        end
+        Dir.glob('*/plugin.rb').each { |plugin_file| require [Rails.root, plugin_file].join('/') }
+      end
     end
 
     def self.install!(name)
-      raise PluginNotFoundError.new unless plugin = repository[name]
-      return unless plugin.enabled || plugin.installed
+      return unless plugin = instance_for(name)
 
       plugin.actions.map(&:call)
-      plugin.outlets.map       { |outlet| apply_outlet(outlet) }
-      plugin.events.map        { |events| events.call(EventBus) }
-      plugin.installed = true
+      plugin.outlets.map { |outlet| apply_outlet(outlet) }
+      plugin.events.map  { |events| events.call(EventBus) }
+      repository[name] = plugin
     end
 
     def self.translations_for(locale = I18n.locale)
@@ -32,13 +30,22 @@ module Plugins
       }
     end
 
+    def self.instance_for(name)
+      "#{name.camelize}::Plugin".constantize.setup!
+    rescue => e
+      puts "Unable to install plugin #{name}: #{e.message}"
+    end
+    private_class_method :instance_for
+
     def self.apply_outlet(outlet)
       active_outlets[outlet.outlet_name] = active_outlets[outlet.outlet_name] << outlet
     end
+    private_class_method :apply_outlet
 
     def self.active_plugins
       repository.values.select(&:installed)
     end
+    private_class_method :active_plugins
 
     def self.active_outlets
       @@active_outlets ||= Hash.new { [] }

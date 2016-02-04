@@ -68,6 +68,7 @@ gem 'oj_mimic_json'
 gem 'simple-rss'
 gem 'snorlax', '~> 0.1.3'
 gem 'custom_counter_cache'
+gem 'safe_shell'
 
 group :development, :test do
   gem 'minitest'

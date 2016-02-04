@@ -26,6 +26,7 @@ bin/
 /lineman
 .powenv
 
+#/plugins/*/**
 /angular/plugins/
 /angular/node_modules
 /angular/dist
