@@ -3,20 +3,34 @@ module Plugins
 
     def self.acquire_plugins!
       Dir.chdir('plugins') do
-        YAML.load_file([Rails.root, :config, :"plugins.yml"].join('/'))['plugins'].each do |plugin|
-          Fetcher.new(plugin[1]['repo'], plugin[1]['version']).execute
-        end
-        Dir.glob('*/plugin.rb').each { |plugin_file| require [Rails.root, plugin_file].join('/') }
+        plugin_directory.each { |plugin| update_plugin!(plugin[1]['repo'], plugin[1]['version']) }
       end
     end
 
-    def self.install!(name)
-      return unless plugin = instance_for(name)
+    def self.update_plugin!(repo, version = nil, force: false)
+      Fetcher.new(repo, version, force).execute!
+    end
 
-      plugin.actions.map(&:call)
-      plugin.outlets.map { |outlet| apply_outlet(outlet) }
-      plugin.events.map  { |events| events.call(EventBus) }
-      repository[name] = plugin
+    def self.store(plugin)
+      repository[plugin.name] = plugin
+    end
+
+    def self.install_plugins!
+      repository.values.each do |plugin|
+        next unless plugin.enabled
+
+        plugin.actions.map(&:call)
+        plugin.outlets.map { |outlet| active_outlets[outlet.outlet_name] = active_outlets[outlet.outlet_name] << outlet }
+        plugin.events.map  { |events| events.call(EventBus) }
+        puts "Plugin #{plugin.name} installed!"
+        plugin.installed = true
+      end
+    end
+
+    def self.install!(plugin)
+    end
+
+    def self.update!(plugin)
     end
 
     def self.translations_for(locale = I18n.locale)
@@ -29,18 +43,6 @@ module Plugins
         outlets:      active_outlets
       }
     end
-
-    def self.instance_for(name)
-      "#{name.camelize}::Plugin".constantize.setup!
-    rescue => e
-      puts "Unable to install plugin #{name}: #{e.message}"
-    end
-    private_class_method :instance_for
-
-    def self.apply_outlet(outlet)
-      active_outlets[outlet.outlet_name] = active_outlets[outlet.outlet_name] << outlet
-    end
-    private_class_method :apply_outlet
 
     def self.active_plugins
       repository.values.select(&:installed)
@@ -56,6 +58,11 @@ module Plugins
       @@repository ||= Hash.new
     end
     private_class_method :repository
+
+    def self.plugin_directory
+      @@directory ||= YAML.load_file([Rails.root, :plugins, :"plugins.yml"].join('/'))['plugins']
+    end
+    private_class_method :plugin_directory
 
   end
 end

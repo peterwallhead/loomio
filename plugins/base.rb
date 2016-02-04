@@ -1,3 +1,5 @@
+require "#{Rails.root}/plugins/repository"
+
 module Plugins
   class NoCodeSpecifiedError < Exception; end
   class NoClassSpecifiedError < Exception; end
@@ -5,11 +7,11 @@ module Plugins
   Outlet = Struct.new(:plugin, :component, :outlet_name)
 
   class Base
-    attr_accessor :name
+    attr_accessor :name, :installed
     attr_reader :actions, :events, :outlets, :translations, :enabled
 
     def self.setup!(name)
-      new(name).tap { |plugin| yield plugin }
+      Repository.store new(name).tap { |plugin| yield plugin }
     end
 
     def initialize(name)
@@ -28,7 +30,6 @@ module Plugins
 
     def use_class(path = nil, &block)
       raise NoCodeSpecifiedError.new unless block_given? || path
-      byebug
       proc = block_given? ? block.to_proc : Proc.new { require [Rails.root, :plugins, @name, path].join('/') }
       @actions.add proc
     end
@@ -56,7 +57,7 @@ module Plugins
 
     def use_translations(path, filename = :client)
       raise NoCodeSpecifiedError.new unless path
-      Dir.chdir("plugins/#{@name}") { Dir.glob("#{path}/#{filename}.*.yml").each { |path| use_translation(path) } }
+      Dir.chdir(@name.to_s) { Dir.glob("#{path}/#{filename}.*.yml").each { |path| use_translation(path) } }
     end
 
     def use_events(&block)

@@ -1,9 +1,0 @@
-plugins:
-  position_specific:
-    repo:    gdpelican/position_specific
-    version: 0a6e81eafb6b009660640edce6687ea5596120f7
-  loomio_webhooks:
-    repo:    loomio/loomio_webhooks
-    version: master
-  peking_doge:
-    repo:    gdpelican/peking_doge
