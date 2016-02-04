@@ -20,10 +20,12 @@ module Plugins
     end
 
     def fetch
+      puts "cloning #{repo}..."
       SafeShell.execute "git", "clone", "https://#{ENV['GITHUB_USERNAME']}:#{ENV['GITHUB_PASSWORD']}@github.com/#{repo}.git"
     end
 
     def checkout
+      puts "checking out #{version}..."
       Dir.chdir(folder) { SafeShell.execute "git", "checkout", version || "master" }
     end
 
