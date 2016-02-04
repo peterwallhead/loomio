@@ -1,3 +1,0 @@
-en:
-  loomio_reactions:
-    reacted_with: '<strong>{{names}}</strong> reacted with <strong>:{{reaction}}:</strong>'
