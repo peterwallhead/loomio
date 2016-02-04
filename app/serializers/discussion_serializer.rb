@@ -8,7 +8,8 @@ class DiscussionSerializer < Simple::DiscussionSerializer
              :updated_at,
              :archived_at,
              :comments_count,
-             :private
+             :private,
+             :edited
 
   attributes_from_reader :discussion_reader_id,
                          :discussion_reader_volume,
@@ -36,6 +37,10 @@ class DiscussionSerializer < Simple::DiscussionSerializer
 
   def reader
     @reader ||= scope[:reader_cache].get_for(object) if scope[:reader_cache]
+  end
+
+  def edited
+    object.versions.where(event: 'update').count > 1
   end
 
   def scope

@@ -5,7 +5,9 @@ angular.module('loomioApp').factory 'VersionModel', (BaseModel) ->
     @indices: ['discussionId']
 
     relationships: ->
+      @belongsTo 'discussion'
       @belongsTo 'proposal'
+      @belongsTo 'author', from: 'users', by: 'whodunnit'
 
     editedAttributeNames: ->
       _.filter _.keys(@changes).sort(), (key) ->
@@ -13,3 +15,6 @@ angular.module('loomioApp').factory 'VersionModel', (BaseModel) ->
 
     attributeEdited: (name) ->
        _.include(_.keys(@changes), name)
+
+    authorOrEditor: ->
+      @author().name or @discussion().authorName()

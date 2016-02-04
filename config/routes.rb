@@ -141,6 +141,8 @@ Loomio::Application.routes.draw do
 
     resources :contact_messages, only: :create
 
+    resources :versions, only: :index
+
     namespace :message_channel do
       post :subscribe
     end

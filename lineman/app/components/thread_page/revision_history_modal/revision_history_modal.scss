@@ -1,0 +1,19 @@
+.revision-history-modal__thread-details {
+  @include fontSmall;
+  color: $grey-on-white;
+}
+
+.revision-history-modal__revision {
+  border-bottom: 1px solid $border-color;
+}
+
+.revision-history-modal__description {
+  margin-bottom: 15px;
+}
+
+.modal-body.revision-history-modal__body {
+  padding: 15px 15px 0 15px;
+}
+.revision-history-modal__close {
+  @include lmoBtnPrimary
+}
