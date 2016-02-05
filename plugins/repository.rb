@@ -52,14 +52,12 @@ module Plugins
     private_class_method :active_plugins
 
     def self.plugin_yaml
-      @@plugin_yaml ||= {}
+      @@plugin_yaml ||= { 'path' => '../plugins' }
     end
     private_class_method :plugin_yaml
 
     def self.save_plugin_yaml
-      File.open([Rails.root, :angular, :build, :config, 'plugins.yml'].join('/'), 'w') do |f|
-        f.write({ plugins: plugin_yaml }.to_yaml)
-      end
+      File.open([Rails.root, :angular, :build, :config, 'plugins.yml'].join('/'), 'w') { |f| f.write plugin_yaml.to_yaml }
     end
     private_class_method :save_plugin_yaml
 

@@ -2,21 +2,22 @@ yaml    = require('node-yaml-config')
 vendor  = yaml.reload('build/config/vendor.yml')
 plugins = yaml.reload('build/config/plugins.yml')
 _       = require 'lodash'
-include = (key, file) -> _.map(vendor.vendor[key], (file) -> [vendor.vendor.path, file].join('/'))
+include = (file, key) ->
+  _.map(file[key], (path) -> [file.path, path].join('/'))
 
 module.exports =
   core:
     coffee:       'core/**/*.coffee'
     haml:         'core/components/**/*.haml'
-    scss:         _.flatten([include('css'), 'core/css/main.scss', 'core/components/**/*.scss'])
-    scss_include: _.flatten([include('css_includes'), 'core/css'])
+    scss:         _.flatten([include(vendor, 'css'), 'core/css/main.scss', 'core/components/**/*.scss'])
+    scss_include: _.flatten([include(vendor, 'css_includes'), 'core/css'])
   vendor:
-    fonts:        include('fonts')
-    js:           include('js')
+    fonts:        include(vendor, 'fonts')
+    js:           include(vendor, 'js')
   plugins:
-    coffee:       'plugins/**/*.coffee'
-    haml:         'plugins/**/*.haml'
-    scss:         'plugins/**/*.scss'
+    coffee:       include(plugins, 'coffee')
+    haml:         include(plugins, 'haml')
+    scss:         include(plugins, 'scss')
   dist:
     assets:      '../public/assets'
     fonts:       '../public/fonts'

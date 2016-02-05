@@ -31,5 +31,6 @@ bin/
 !/plugins/*.md
 !/plugins/loomio_webhooks
 /angular/plugins/
+/angular/build/config/plugins.yml
 /angular/node_modules
 /angular/dist
