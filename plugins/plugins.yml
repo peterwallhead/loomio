@@ -3,7 +3,7 @@
 # plugins:
 #   plugin_name:
 #     repo: loomio/my_awesome_plugin (required, note that we only support github repositories at the moment)
-#     version: branch, tag, or commit you'd like to clone. (optional, defaults to 'master')
+#     version: branch, tag, or commit you'd like to clone. (optional, accepts anything which can be passed to 'git checkout`, defaults to 'master')
 
 # In order to clone, you'll need to supply some github credentials in your ENV, like so:
 # GITHUB_USERNAME: loomio
