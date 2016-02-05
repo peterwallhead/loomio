@@ -9,7 +9,7 @@ module Plugins
 
   class Base
     attr_accessor :name, :installed
-    attr_reader :actions, :events, :outlets, :translations, :enabled
+    attr_reader :assets, :actions, :events, :outlets, :translations, :enabled
 
     def self.setup!(name)
       Repository.store new(name).tap { |plugin| yield plugin }
@@ -18,7 +18,7 @@ module Plugins
     def initialize(name)
       @name = name
       @translations = {}
-      @actions, @events, @outlets = Set.new, Set.new, Set.new
+      @assets, @actions, @events, @outlets = Set.new, Set.new, Set.new, Set.new
     end
 
     def enabled=(value)
@@ -81,10 +81,7 @@ module Plugins
 
     def use_asset(path)
       raise InvalidAssetType.new unless VALID_ASSET_TYPES.include? path.split('.').last.to_sym
-      file_path = [Rails.root, :plugins, @name, path].join('/')
-      dest_path = [Rails.root, :angular, :plugins, @name, path].join('/')
-      dest_folder = dest_path.split('/')[0...-1].join('/') # drop filename so we can create the directory beforehand
-      @actions.add Proc.new { FileUtils.mkdir_p(dest_folder) && FileUtils.cp(file_path, dest_path) if File.exist?(file_path) }
+      @assets.add [@name, path].join('/')
     end
 
     private

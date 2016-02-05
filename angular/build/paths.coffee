@@ -1,6 +1,8 @@
-config = require('node-yaml-config').reload('config.yml')
-_      = require 'lodash'
-include = (key, file) -> _.map(config.vendor[key], (file) -> [config.vendor.path, file].join('/'))
+yaml    = require('node-yaml-config')
+vendor  = yaml.reload('build/config/vendor.yml')
+plugins = yaml.reload('build/config/plugins.yml')
+_       = require 'lodash'
+include = (key, file) -> _.map(vendor.vendor[key], (file) -> [vendor.vendor.path, file].join('/'))
 
 module.exports =
   core:

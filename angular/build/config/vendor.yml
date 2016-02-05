@@ -1,4 +1,4 @@
-plugins:
+---
 vendor:
   path: node_modules
   js:
