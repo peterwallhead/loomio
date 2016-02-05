@@ -1,5 +1,5 @@
 screenshooter = require('protractor-jasmine2-screenshot-reporter');
-paths         = require('../tasks/paths')
+paths         = require('../build/paths')
 
 exports.config =
   seleniumServerJar: '../node_modules/selenium-server-standalone-jar/jar/selenium-server-standalone-2.48.2.jar'
