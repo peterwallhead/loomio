@@ -8,6 +8,7 @@ module Plugins
         plugin.use_class_directory "app/models/webhooks/slack/"
         plugin.use_class "app/models/webhook"
         plugin.use_class "app/services/webhook_service"
+        plugin.use_class "app/admin/webhooks"
 
         plugin.use_database_table :webhooks do |table|
           table.references :hookable, polymorphic: true, index: true
