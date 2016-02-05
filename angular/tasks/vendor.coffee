@@ -8,8 +8,8 @@ rename   = require 'gulp-rename'
 expect   = require 'gulp-expect-file'
 
 module.exports = ->
-  pipe gulp.src(paths.js.vendor), [
-    expect({errorOnFailure: true}, paths.js.vendor), # ensure all vendor files are present
+  pipe gulp.src(paths.vendor.js), [
+    expect({errorOnFailure: true}, paths.vendor.js), # ensure all vendor files are present
     concat('vendor.js'),                      # concatenate vendor files
     gulp.dest(paths.dist.assets),             # write assets/vendor.js
     uglify(),                                 # minify vendor.js

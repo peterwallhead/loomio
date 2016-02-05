@@ -23,13 +23,13 @@ screenshots/
 .env
 bin/
 /public/uploads
-/lineman
 .powenv
 
 /plugins/*/
 !/plugins/*.rb
 !/plugins/*.yml
 !/plugins/*.md
+!/plugins/loomio_webhooks
 /angular/plugins/
 /angular/node_modules
 /angular/dist
