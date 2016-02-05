@@ -10,7 +10,7 @@ tmp/
 *.tmproj
 *.DS_Store
 coverage
-public/assets
+public/client
 public/system
 public/fonts
 .project

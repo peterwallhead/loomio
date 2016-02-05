@@ -19,8 +19,8 @@ module.exports =
     haml:         include(plugins, 'haml')
     scss:         include(plugins, 'scss')
   dist:
-    assets:      '../public/assets'
-    fonts:       '../public/fonts'
+    fonts:       '../public/client/fonts'
+    assets:      '../public/client/development'
   protractor:
     config:       'test/protractor.coffee',
     screenshots:  'test/protractor/screenshots',
