@@ -32,6 +32,7 @@ def build_and_push_branch(remote, branch)
   build_branch = "deploy-#{remote}-#{branch}-#{Time.now.to_i}"
   run_commands ["git checkout #{branch}",                                                         # checkout branch
                 "git checkout -b #{build_branch}",                                                # cut a new deploy branch off of that branch
+                "rake plugins:install",                                                           # install plugins specified in plugins/plugins.yml
                 "cd angular && npm install && gulp compile && cd ../",                            # build the app via gulp
                 "cp -r public/client/development public/client/#{Loomio::Version.current}",       # version assets
                 "git add public/client/#{Loomio::Version.current} public/client/fonts -f",        # add assets to commit
