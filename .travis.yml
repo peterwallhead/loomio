@@ -19,7 +19,7 @@ install:
   - nvm install 4.2.6
   - nvm use 4.2.6
   - bundle install --without development --deployment --jobs=3 --retry=3
-  - rake plugins:install
+  - rake plugins:acquire
   - cd angular
   - npm install
   - cd ..
