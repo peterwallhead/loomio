@@ -1,7 +1,12 @@
 yaml    = require('node-yaml-config')
 vendor  = yaml.reload('build/config/vendor.yml')
-plugins = try { yaml.reload('build/config/plugins.yml') } catch(e) { return {} }
 _       = require 'lodash'
+
+plugins = try
+  yaml.reload('build/config/plugins.yml')
+catch
+  {}
+
 include = (file, key) ->
   _.map(file[key], (path) -> [file.path, path].join('/'))
 

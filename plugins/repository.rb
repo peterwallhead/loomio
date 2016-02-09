@@ -1,16 +1,6 @@
 module Plugins
   class Repository
 
-    def self.acquire_plugins!
-      Dir.chdir('plugins') do
-        plugin_directory.each { |plugin| update_plugin!(plugin[1]['repo'], plugin[1]['version']) }
-      end
-    end
-
-    def self.update_plugin!(repo, version = nil, force: false)
-      Fetcher.new(repo, version, force).execute!
-    end
-
     def self.store(plugin)
       repository[plugin.name] = plugin
     end
@@ -70,11 +60,6 @@ module Plugins
       @@repository ||= Hash.new
     end
     private_class_method :repository
-
-    def self.plugin_directory
-      @@plugin_directory ||= YAML.load_file([Rails.root, :plugins, :"plugins.yml"].join('/'))['plugins']
-    end
-    private_class_method :plugin_directory
 
   end
 end
