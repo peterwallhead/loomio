@@ -40,7 +40,7 @@ class DiscussionSerializer < Simple::DiscussionSerializer
   end
 
   def edited
-    object.versions.where(event: 'update').count > 1
+    object.versions_count > 1
   end
 
   def scope

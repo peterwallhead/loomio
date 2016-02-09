@@ -37,7 +37,7 @@
           %timeago.nowrap{timestamp: '::threadPage.discussion.createdAt' }>
           %translate_button.lmo-card-minor-action{model: 'threadPage.discussion', showdot: 'true'}>
           %span{aria-hidden: 'true'}·
-          %span{ng-if: 'threadPage.threadEdited()'}
+          %span{ng-if: 'threadPage.discussion.edited'}
             %button.lmo-btn-link{ng-click: 'threadPage.showRevisionHistory()'}>
               %span{translate: 'discussion.edited'}
             %span{aria-hidden: 'true'}·

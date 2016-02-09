@@ -16,5 +16,8 @@ angular.module('loomioApp').factory 'VersionModel', (BaseModel) ->
     attributeEdited: (name) ->
        _.include(_.keys(@changes), name)
 
-    authorOrEditor: ->
-      @author().name or @discussion().authorName()
+    authorOrEditorName: ->
+      if @author()
+        @author().name
+      else
+        @discussion().authorName()

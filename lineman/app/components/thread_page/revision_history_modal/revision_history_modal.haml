@@ -9,7 +9,7 @@
         .revision-history-modal__thread-details
           %span{ng-if: 'versionIsOriginal(version)', translate: 'revision_history_modal.started_by'}
           %span{ng-if: '!versionIsOriginal(version)', translate: 'revision_history_modal.edited_by'}
-          %strong> {{version.authorOrEditor()}}
+          %strong> {{version.authorOrEditorName()}}
           %timeago.nowrap{timestamp: 'version.createdAt' }>
           %span{ng-if: 'versionIsCurrent(version)'}> (current)
         .revision-history-modal__description {{threadDescription(version)}}

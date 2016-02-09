@@ -52,6 +52,11 @@ EventBus.configure do |config|
     DiscussionReader.for_model(model, actor).set_volume_as_required!
   end
 
+  # update discussion versions_count when title or description edited
+  config.listen('discussion_update') do |discussion|
+    discussion.update_versions_count
+  end
+
   # publish reply and mention events after comment creation
   config.listen('comment_create') { |comment| Events::CommentRepliedTo.publish!(comment) }
   config.listen('comment_create') { |comment| comment.notified_group_members.each { |user| Events::UserMentioned.publish!(comment, user) } }

@@ -100,9 +100,6 @@ angular.module('loomioApp').controller 'ThreadPageController', ($scope, $routePa
   @proposalButtonInView = ($inview) ->
     $rootScope.$broadcast 'proposalButtonInView', $inview
 
-  @threadEdited = ->
-    @discussion.edited
-
   @showRevisionHistory = ->
     ModalService.open RevisionHistoryModal, discussion: => @discussion
 

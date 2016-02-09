@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160114001745) do
+ActiveRecord::Schema.define(version: 20160209032652) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -265,6 +265,7 @@ ActiveRecord::Schema.define(version: 20160114001745) do
     t.integer  "first_sequence_id",   default: 0,     null: false
     t.datetime "last_item_at"
     t.integer  "salient_items_count", default: 0,     null: false
+    t.integer  "versions_count",      default: 0
   end
 
   add_index "discussions", ["author_id"], name: "index_discussions_on_author_id", using: :btree
