@@ -52,9 +52,9 @@ EventBus.configure do |config|
     DiscussionReader.for_model(model, actor).set_volume_as_required!
   end
 
-  # update discussion versions_count when title or description edited
-  config.listen('discussion_update') do |discussion|
-    discussion.update_versions_count
+  # update discussion or comment versions_count when title or description edited
+  config.listen('discussion_update', 'comment_update') do |model|
+    model.update_versions_count
   end
 
   # publish reply and mention events after comment creation

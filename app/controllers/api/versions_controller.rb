@@ -7,7 +7,9 @@ class API::VersionsController < API::RestfulController
   end
 
   def accessible_records
-    load_and_authorize(params[:model]).versions.where(event: 'update').order(created_at: :desc)
+    records = load_and_authorize(params[:model]).versions.order(created_at: :desc)
+    records = records.where(event: 'update') if params[:model] == 'discussion'
+    records
   end
 
   def default_page_size
