@@ -27,18 +27,12 @@ angular.module('loomioApp').factory 'RevisionHistoryModal', ->
         when 'comment'    then $scope.model.attributeForVersion('body', version)
 
     $scope.threadDetails = (version) ->
-      if $scope.versionIsOriginal(version)
+      if version.isOriginal()
         'revision_history_modal.started_by'
       else
         'revision_history_modal.edited_by'
 
     $scope.versionCreatedAt = (version) ->
       moment(version).format('Do MMMM YYYY, h:mma')
-
-    $scope.versionIsCurrent = (version) ->
-      version.id == _.max(_.pluck($scope.model.versions(), 'id'))
-
-    $scope.versionIsOriginal = (version) ->
-      version.id == _.min(_.pluck($scope.model.versions(), 'id'))
 
     return

@@ -11,7 +11,7 @@
           %span{ng-if: "commentRevision()", translate: "revision_history_modal.posted"}
           %span{ng-if: "discussionRevision()", translate: "{{threadDetails(version)}}", translate-value-name: "{{version.authorOrEditorName()}}"}
           %span> {{versionCreatedAt(version.createdAt)}}
-          %span{ng-if: "versionIsCurrent(version)"}> (current)
+          %span{ng-if: "version.isCurrent(version)"}> (current)
         .revision-history-modal__revision-body.lmo-markdown-wrapper{marked: "revisionBody(version)"}
 
   .modal-footer

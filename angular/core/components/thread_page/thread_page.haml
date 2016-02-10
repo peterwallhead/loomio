@@ -38,8 +38,7 @@
           %translate_button.lmo-card-minor-action{model: "threadPage.discussion", showdot: "true"}>
           %span{aria-hidden: "true"}·
           %span{ng-if: "threadPage.discussion.edited"}
-            %button.lmo-btn-link{ng-click: "threadPage.showRevisionHistory()"}>
-              %span{translate: "discussion.edited"}
+            %button.thread-context__edited-link.lmo-btn-link{ng-click: "threadPage.showRevisionHistory()", translate: "discussion.edited"}>
             %span{aria-hidden: "true"}·
           %span.nowrap.discussion-privacy__is-private{ng-show: "threadPage.discussion.private"}>
             %i.fa.fa-lock>

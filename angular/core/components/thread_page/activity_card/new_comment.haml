@@ -41,7 +41,7 @@
         %timeago{timestamp: "comment.createdAt" }>
       %span{ng-if: "comment.edited"}
         %span{aria-hidden: "true"}·
-        %button.lmo-btn-link{ng-click: "showRevisionHistory()", translate: "new_comment_item.edited"}>
+        %button.thread-item__action--view-edits{ng-click: "showRevisionHistory()", translate: "new_comment_item.edited"}>
 
     .thread-item__liked-by{ng_show: "anybodyLikesIt()"}
       {{ likedBySentence }}
