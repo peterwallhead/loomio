@@ -7,3 +7,9 @@ angular.module('loomioApp').factory 'VersionRecordsInterface', (BaseRecordsInter
         params:
           model: 'discussion'
           discussion_id: discussionKey
+
+    fetchByComment: (comment, options = {}) ->
+      @fetch
+        params:
+          model: 'comment'
+          comment_id: comment.id

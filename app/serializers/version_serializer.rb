@@ -7,6 +7,7 @@ class VersionSerializer < ActiveModel::Serializer
              :created_at
 
   has_one :discussion
+  has_one :comment
   has_one :proposal
 
   def changes
@@ -21,6 +22,10 @@ class VersionSerializer < ActiveModel::Serializer
     object.item
   end
 
+  def comment
+    object.item
+  end
+
   def proposal
     object.item
   end
@@ -31,6 +36,10 @@ class VersionSerializer < ActiveModel::Serializer
 
   def include_discussion?
     object.item_type == 'Discussion'
+  end
+
+  def include_comment?
+    object.item_type == 'Comment'
   end
 
   def include_proposal?

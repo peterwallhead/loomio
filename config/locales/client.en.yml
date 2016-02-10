@@ -381,8 +381,10 @@ en:
 
   revision_history_modal:
     thread_header: Thread context revision history
-    started_by: Started by
-    edited_by: Edited by
+    comment_header: Comment edit revision history
+    started_by: 'Started by <strong>{{name}}</strong>'
+    edited_by: 'Edited by <strong>{{name}}</strong>'
+    posted: Posted
 
   group_page:
     thread_list:
@@ -851,6 +853,7 @@ en:
       edit_comment: 'Edit comment'
       delete_comment: 'Delete comment'
     in_reply_to: 'in reply to <strong>{{recipient}}</strong>'
+    edited: 'Edited'
 
   new_vote_item:
     agree: 'agreed'

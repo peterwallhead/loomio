@@ -6,6 +6,7 @@ angular.module('loomioApp').factory 'VersionModel', (BaseModel) ->
 
     relationships: ->
       @belongsTo 'discussion'
+      @belongsTo 'comment'
       @belongsTo 'proposal'
       @belongsTo 'author', from: 'users', by: 'whodunnit'
 
