@@ -166,6 +166,20 @@ In order to attach a plugin to an outlet, we simply need to specify the name of 
 
 And voila! Custom code almost anywhere you'd like in the angular interface.
 
+### Add other angular code
+If you want to make an angular something which isn't a component (like a filter or a factory), you can do so using `plugin.use_asset`
+
+```coffee
+  # services/kickflip_filter.coffee
+  angular.module('loomioApp').filter 'kickflipFilter', ->
+    (text) ->
+      "#{text} for 100 points!!"
+```
+
+```ruby
+  plugin.use_asset 'services/kickflip_filter.coffee'
+```
+
 ### Add database migrations
 If you need a spot in the database to store all the cool stuff your plugin is doing, we can make a new table using the `use_database_table` command like this:
 
