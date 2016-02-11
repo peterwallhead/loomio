@@ -6,6 +6,7 @@ module Plugins
     end
 
     def self.install_plugins!
+      Dir.chdir('plugins') { Dir['*/plugin.rb'].each { |file| load file } }
       repository.values.each do |plugin|
         next unless plugin.enabled
 

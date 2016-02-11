@@ -3,7 +3,6 @@ module Plugins
 
     def execute!
       should_execute? && fetch && checkout
-      load_code
     rescue => e
       clean && puts("WARNING: Unable to clone #{repo} at #{version}: #{e.message}")
     end
@@ -27,10 +26,6 @@ module Plugins
     def checkout
       puts "checking out #{version}..."
       Dir.chdir(folder) { SafeShell.execute "git", "checkout", version || "master" }
-    end
-
-    def load_code
-      load "./#{folder}/plugin.rb"
     end
 
     def folder

@@ -12,14 +12,6 @@
 # otherwise you'll have to put in your credentials for each plugin you clone and that will make you sad!
 
 plugins:
-  position_specific:
-    repo:    gdpelican/position_specific
-    version: 0a6e81eafb6b009660640edce6687ea5596120f7
   loomio_webhooks:
     repo:    loomio/loomio_webhooks
     version: master
-  loomio_reactions:
-    repo:    loomio/loomio_reactions
-    version: test_branch
-  peking_doge:
-    repo:    gdpelican/peking_doge
