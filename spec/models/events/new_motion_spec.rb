@@ -4,7 +4,6 @@ describe Events::NewMotion do
   let(:discussion) { create :discussion }
   let(:user) { create :user, email: 'bill@dave.com' }
   let(:motion) { create :motion, discussion: discussion }
-  let(:webhook_service) { Plugins::LoomioWebhooks::WebhookService }
 
   describe "::publish!" do
 

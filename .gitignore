@@ -12,7 +12,6 @@ tmp/
 coverage
 public/client
 public/system
-public/fonts
 .project
 Session.vim
 *.sql
@@ -29,7 +28,9 @@ bin/
 !/plugins/*.rb
 !/plugins/*.yml
 !/plugins/*.md
-/angular/plugins/
+# NB: To reveal a plugin to hack on it locally, add a line here telling .gitignore to reveal it:
+# !/plugins/my_awesome_plugin
+
 /angular/build/config/plugins.yml
 /angular/node_modules
 /angular/dist

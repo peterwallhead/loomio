@@ -1,4 +1,4 @@
-# Plugin architecture for Loomio! (a work in progress)
+# HOWTO: Developing Loomio Plugins
 
 Due to popular demand, we've implemented a simple plugin architecture to allow contributors to supply their own awesome improvements to Loomio. This is a great place to start!
 
@@ -12,6 +12,12 @@ Every plugin must be a folder within the `/plugins` directory, with a `plugin.rb
 ```
 
 As we'll see, other files may go into this directory, but this is the bare minimum for a working plugin.
+
+By default, all folders in the /plugins folder are hidden by `.gitignore`, so if you're hacking on a plugin locally, be sure to add a line to `.gitignore` telling it to reveal the plugin(s) you're working on at the moment.
+
+```
+!/plugins/kickflip
+```
 
 ### Writing your plugin.rb
 
@@ -227,4 +233,29 @@ Now, we can tell our plugin to load those translations with the `use_translation
 where 'config/locales' is the folder relative to the plugin root, and 'kickflip' is the name of our locale files.
 
 ### Add tests
-TODO
+The official Loomio plugins will all have just the right amount of tests, and so can you!
+
+Putting regular rspec tests into the `spec` folder will allow you to run tests for your plugins by executing `bundle exec rspec plugins` from the root folder.
+
+```
+/plugins
+  /kickflip
+    /spec
+      /models
+        kickflip_spec.rb
+```
+
+```ruby
+# kickflip_spec.rb
+describe Kickflip do
+  it 'passes a test' do
+    expect(true).to eq true
+  end
+end
+```
+
+`plugins` here is merely a path to run tests in, so you can be more specific with the files or individual specs you'd like to run, just like with the specs in core.
+
+```bash
+  bundle exec rspec plugins/kickflip/spec/models/kickflip_spec.rb:3
+```
