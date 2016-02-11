@@ -14,7 +14,6 @@ module Plugins
         plugin.assets.map  { |asset|  save_asset(asset) }
         plugin.outlets.map { |outlet| active_outlets[outlet.outlet_name] = active_outlets[outlet.outlet_name] << outlet }
         plugin.events.map  { |events| events.call(EventBus) }
-        puts "Plugin #{plugin.name} installed!"
         plugin.installed = true
       end
       save_plugin_yaml
