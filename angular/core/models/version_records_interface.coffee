@@ -8,8 +8,8 @@ angular.module('loomioApp').factory 'VersionRecordsInterface', (BaseRecordsInter
           model: 'discussion'
           discussion_id: discussionKey
 
-    fetchByComment: (comment, options = {}) ->
+    fetchByComment: (commentId, options = {}) ->
       @fetch
         params:
           model: 'comment'
-          comment_id: comment.id
+          comment_id: commentId

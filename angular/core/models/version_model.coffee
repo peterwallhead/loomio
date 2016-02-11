@@ -17,14 +17,17 @@ angular.module('loomioApp').factory 'VersionModel', (BaseModel) ->
     attributeEdited: (name) ->
        _.include(_.keys(@changes), name)
 
+    model: ->
+      @discussion() or @comment()
+
     isCurrent: ->
-      @id == _.last(@discussion().versions())['id']
+      @id == _.last(@model().versions())['id']
 
     isOriginal: ->
-      @id == _.first(@discussion().versions())['id']
+      @id == _.first(@model().versions())['id']
 
     authorOrEditorName: ->
       if @isOriginal()
-        @discussion().authorName()
+        @model().authorName()
       else
         @author().name

@@ -137,6 +137,9 @@ angular.module('loomioApp').factory 'DiscussionModel', (DraftableModel, AppConfi
     move: =>
       @remote.patchMember @keyOrId(), 'move', { group_id: @groupId }
 
+    edited: ->
+      @versionsCount > 1
+
     attributeForVersion: (attr, version) ->
       return '' unless version
       if version.changes[attr]

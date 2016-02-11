@@ -68,6 +68,9 @@ angular.module('loomioApp').factory 'CommentModel', (DraftableModel, AppConfig) 
         cooked = cooked.replace(///@#{username}///g, "[[@#{username}]]")
       cooked
 
+    edited: ->
+      @versionsCount > 1
+
     attributeForVersion: (attr, version) ->
       return '' unless version
       if version.changes[attr]

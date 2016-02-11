@@ -5,7 +5,7 @@ angular.module('loomioApp').factory 'RevisionHistoryModal', ->
 
     switch $scope.model.constructor.singular
       when 'discussion' then Records.versions.fetchByDiscussion($scope.model.key)
-      when 'comment'    then Records.versions.fetchByComment($scope.model)
+      when 'comment'    then Records.versions.fetchByComment($scope.model.id)
 
     $scope.header =
       switch $scope.model.constructor.singular
