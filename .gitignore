@@ -10,8 +10,6 @@ tmp/
 *.tmproj
 *.DS_Store
 coverage
-public/client
-public/system
 .project
 Session.vim
 *.sql
@@ -21,16 +19,18 @@ screenshots/
 .idea
 .env
 bin/
-/public/uploads
 .powenv
 
-/plugins/*/
-!/plugins/*.rb
-!/plugins/*.yml
-!/plugins/*.md
-# NB: To reveal a plugin to hack on it locally, add a line here telling .gitignore to reveal it:
-# !/plugins/my_awesome_plugin
+public/client
+public/system
+public/uploads
 
-/angular/build/config/plugins.yml
-/angular/node_modules
-/angular/dist
+plugins/*/
+!plugins/*.rb
+!plugins/*.yml
+!plugins/*.md
+# NB: To reveal a plugin to hack on it locally, add a line here telling .gitignore to reveal it:
+# !plugins/my_awesome_plugin
+
+angular/node_modules
+angular/build/config/plugins.yml
