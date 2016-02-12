@@ -146,7 +146,7 @@ To tell the plugin to use your component, put a line in our `plugin.rb` like thi
   use_component :kickflip
 ```
 
-This will make you component available within the app.
+This will make your component available within the app.
 
 ### Attach components to outlets in the Angular interface
 Now that the component is loaded into our angular app, how to make it appear on the interface?
